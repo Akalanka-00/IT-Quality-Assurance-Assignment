@@ -1,10 +1,9 @@
-import {expect, test} from "@playwright/test"
+import {test} from "@playwright/test"
+import {PomSample} from "../src/PomSample";
 
 test.describe("test",()=>{
     test('test', async ({ page }) => {
-        // Navigate to the login page
-    await page.goto('https://example.com/login');
-
-
+    const pom:PomSample=new PomSample();
+    await pom.testMethod(page);
 	});
 });
