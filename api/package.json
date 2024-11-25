@@ -1,0 +1,21 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "qa": "set WORKER_NAME=QA && npx playwright test --workers 1 --project QA_environment --headed",
+    "dev": "set WORKER_NAME=DEV && npx playwright test --workers 1 --project DEV_environment --headed"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.44.1",
+    "@types/node": "^20.14.2"
+  },
+  "dependencies": {
+    "playwright": "^1.44.1",
+    "xlsx": "^0.18.5"
+  }
+}
