@@ -23,7 +23,6 @@ export class Authentication{
     }
 
     public async verifyLoginPage() {
-        console.log(this.dataStore.getData())
         await this.page.goto(Urls.LOGIN_URL);
         await this.shared.validateTitle(this.page, this.dataStore.getData().AuthData.title);
         await this.shared.validateUrl(this.page, Urls.LOGIN_URL);
@@ -81,11 +80,41 @@ export class Authentication{
         await this.processLogin(this.dataStore.getData().AuthData.credentials);
     }
 
+    public async loginWithEmployeeCredentials(){
+        const credentials:LoginCredentials = this.dataStore.getData().AuthData.customerCredentials;
+        if(credentials.username==="" || credentials.password===""){
+            throw new Error("Before log into the system as a Employee, Need to add new employee")
+        }
+        await this.processLogin(this.dataStore.getData().AuthData.customerCredentials);
+    }
+
+    //Use this method for other test cases
+    public async optimizedAdminLogin(){
+        if(this.dataStore.getData().SharedData.isLoggedIn){
+            console.log("User already loggedIn...");
+        }else {
+            await this.verifyLoginPage();
+            await this.loginWithAdminCredentials();
+            await this.verifySuccessLogin();
+        }
+    }
+
+    public async loginWithAdminCredentialsInUpperCase(){
+        await this.processLogin({username: this.dataStore.getData().AuthData.credentials.username.toUpperCase(), password: this.dataStore.getData().AuthData.credentials.password.toUpperCase()});
+    }
+
+    public async verifyFailedLogin(){
+        await this.page.waitForURL(Urls.DASHBOARD_URL);
+        await this.dashboard.verifyDashboard();
+        this.dataStore.setData("SharedData.isLoggedIn", true);
+    }
+
     public async verifySuccessLogin(){
         await this.page.waitForURL(Urls.DASHBOARD_URL);
         await this.dashboard.verifyDashboard();
         this.dataStore.setData("SharedData.isLoggedIn", true);
-        console.log(this.dataStore.getData());
+        console.log("\n******************************* Login Successful *******************************\n");
+
     }
 
 

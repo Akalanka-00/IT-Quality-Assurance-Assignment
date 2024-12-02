@@ -13,6 +13,7 @@ const commonData = {
 // Define your shared authentication data in the required format
 export const AuthData = {
     credentials: { username: "Admin", password: "admin123" } as LoginCredentials,
+    customerCredentials: { username: "", password: "" } as LoginCredentials,
     title: "OrangeHRM",
     logoImg: "https://opensource-demo.orangehrmlive.com/web/images/ohrm_branding.png?v=1721393199309",
     loginTitle: "Login",
