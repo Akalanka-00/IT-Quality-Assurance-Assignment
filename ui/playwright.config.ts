@@ -18,10 +18,11 @@ const config: PlaywrightTestConfig = defineConfig({
     actionTimeout: 0,
     trace: 'on-first-retry',
     viewport: null,
-    browserName: 'chromium',
+    browserName: 'firefox',
+    baseURL: 'https://opensource-demo.orangehrmlive.com',
     launchOptions: {
       args: ['--start-maximized'],
-      slowMo: 100,
+      // slowMo: 100,
     },
   },
 
@@ -29,7 +30,7 @@ const config: PlaywrightTestConfig = defineConfig({
     {
       name: 'QA_environment',
       use: { 
-        baseURL: 'https://opensource-demo.orangehrmlive.com/web/index.php/auth/login',
+
         browserName: 'firefox',
         launchOptions: {
           args: process.env.CI ? ['--start-maximized'] : [],
