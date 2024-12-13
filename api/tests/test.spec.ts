@@ -1,6 +1,5 @@
 import {test} from "playwright/test";
 import {PomSample} from "../src/PomSample";
-import {DataStore} from "../utils/DataStore";
 
 test.describe.only('Authentication', () => {
 
@@ -12,7 +11,7 @@ test.describe.only('Authentication', () => {
 
     test('testing2', async ({request}) => {
         const pom: PomSample = new PomSample(request);
-        //await pom.testMethod();
+        await pom.testMethod();
     });
 
 
