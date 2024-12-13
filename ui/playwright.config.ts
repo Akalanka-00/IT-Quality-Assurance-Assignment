@@ -28,7 +28,7 @@ const config: PlaywrightTestConfig = defineConfig({
 
   projects: [
     {
-      name: 'QA_environment',
+      name: 'QA_UI',
       use: { 
 
         browserName: 'firefox',

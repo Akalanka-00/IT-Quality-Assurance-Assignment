@@ -23,9 +23,9 @@ export default defineConfig({
 
 	projects: [
 		{
-			name: "QA_environment",
+			name: "QA_API",
 			use: { ...process.env.HEADLESS ? { headless: true } : { headless: false },
-				baseURL: "http://127.0.0.1:8080"},
+				baseURL: "http://127.0.0.1:7081"},
 		},
 
 

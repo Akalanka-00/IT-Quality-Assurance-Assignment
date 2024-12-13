@@ -1,7 +1,5 @@
-import {expect, test, Page } from "@playwright/test"
+import { test, Page } from "@playwright/test"
 import {Authentication} from "../src/authentication/Authentication";
-import {Dashboard} from "../src/dashboard/Dashboard";
-
 
 let page: Page;
 
@@ -12,14 +10,11 @@ test.beforeAll(async ({browser}) => {
 
 test.describe("Authentication",()=>{
 
-    test('Admin Login', async ({  }) => {
+    test('Admin Login with correct credentials', async ({  }) => {
         const authentication: Authentication = new Authentication(page);
         await authentication.verifyLoginPage();
         await authentication.loginWithAdminCredentials();
         await authentication.verifySuccessLogin();
-
-
-
 
     });
 });

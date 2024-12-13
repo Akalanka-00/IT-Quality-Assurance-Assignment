@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "qa": "npx playwright test --workers 1 --project QA_environment --headed"
+    "test": "npx playwright test --workers 1 --project QA_UI --headed"
   },
   "keywords": [],
   "author": "",
