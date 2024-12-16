@@ -66,7 +66,7 @@ jobs:
 
       - name: Run Playwright UI Tests
         working-directory: ./ui
-        run: npm run test
+        run: npx playwright test --workers 1 --project QA_UI --headed
 
   run-api-tests:
     name: Run Playwright API Tests
@@ -92,7 +92,7 @@ jobs:
 
       - name: Run Playwright API Tests
         working-directory: ./api
-        run: npm run test
+        run: npx playwright test --workers 1 --project QA_API
 
   stop-server:
     name: Stop the Server
