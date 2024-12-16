@@ -66,7 +66,7 @@ jobs:
 
       - name: Run Playwright UI Tests
         working-directory: ./ui
-        run: npx playwright test --workers 1 --project QA_UI --headed
+        run: npx playwright test --workers 1 --project QA_UI
 
   run-api-tests:
     name: Run Playwright API Tests
