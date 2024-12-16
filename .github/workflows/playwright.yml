@@ -81,10 +81,11 @@ jobs:
           node-version: '20'
 
       - name: Install Dependencies for API Tests
-        run: npm ci
         working-directory: ./api
+        run: npm ci
 
       - name: Run Playwright API Tests
+        working-directory: ./api
         run: npx playwright test --project QA_API
 
       - name: Upload Playwright API Report as Artifact
