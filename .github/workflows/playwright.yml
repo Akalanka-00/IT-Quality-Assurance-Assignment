@@ -1,4 +1,4 @@
-name: Run JAR and Playwright Tests
+name: Run Playwright Automation Tests
 
 on:
   workflow_dispatch:  # Trigger workflow manually using the 'Run workflow' button
@@ -100,3 +100,49 @@ jobs:
       - name: Stop the Server
         run: |
           pkill -f 'java -jar server/demo-0.0.1-SNAPSHOT.jar'
+          
+      
+
+
+  publish-reports:
+    name: Publish Playwright Reports
+    runs-on: ubuntu-latest
+    needs: [run-ui-tests, run-api-tests]
+
+    steps:
+      - name: Download UI Test Report
+        uses: actions/download-artifact@v3
+        with:
+          name: ui-test-report
+          path: ./ui-report
+
+      - name: Download API Test Report
+        uses: actions/download-artifact@v3
+        with:
+          name: api-test-report
+          path: ./api-report
+
+      - name: List Downloaded Files for Debugging
+        run: |
+          echo "UI Report Files:"
+          ls -R ./ui-report
+          echo "API Report Files:"
+          ls -R ./api-report
+
+      - name: Serve Reports via GitHub Pages
+        run: |
+          mkdir -p ./gh-pages
+          cp -r ./ui-report ./gh-pages/ui-report
+          cp -r ./api-report ./gh-pages/api-report
+
+      - name: Upload Combined Reports as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: combined-test-reports
+          path: ./gh-pages
+          expire-in: 14d
+
+      - name: Output Report URLs
+        run: |
+          echo "UI Report: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts"
+          echo "API Report: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts"
