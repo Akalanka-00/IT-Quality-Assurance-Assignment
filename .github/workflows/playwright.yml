@@ -125,6 +125,7 @@ jobs:
 
       - name: List Downloaded Files for Debugging
         run: |
+          ls -la ./public
           echo "UI Report Files:"
           ls -R ./public/ui-report
           echo "API Report Files:"
