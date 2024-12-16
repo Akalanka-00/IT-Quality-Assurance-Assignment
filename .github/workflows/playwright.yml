@@ -60,13 +60,13 @@ jobs:
 
       - name: Start the JAR File
         run: |
-            nohup java -jar server/demo-0.0.1-SNAPSHOT.jar > server.log 2>&1 &
-            echo "Waiting for the server to start..."
-            until curl --silent --head http://localhost:7081/api/books; do
-              echo "Server not ready yet. Retrying in 2 seconds..."
-              sleep 2
-            done
-            echo "Server is up and running."
+          nohup java -jar server/demo-0.0.1-SNAPSHOT.jar > server.log 2>&1 &
+          echo "Waiting for the server to start..."
+          until curl --silent --head http://localhost:7081/api/books; do
+            echo "Server not ready yet. Retrying in 2 seconds..."
+            sleep 2
+          done
+          echo "Server is up and running."
 
       - name: Upload Server Log for Debugging
         if: always()
@@ -94,14 +94,12 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: api-test-report
-          path: ./api/playwright-report/index.html
+          path: ./api/playwright-report  # Download the whole report directory
           expire-in: 14d  # Set expiration time for the artifact
 
       - name: Stop the Server
         run: |
           pkill -f 'java -jar server/demo-0.0.1-SNAPSHOT.jar'
-          
-      
 
 
   publish-reports:
@@ -123,10 +121,11 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: api-test-report
-          path: ./public/api-report/index.html
+          path: ./public/api-report
 
       - name: List Downloaded Files for Debugging
         run: |
+          ls -la ./public
           echo "UI Report Files:"
           ls -R ./public/ui-report
           echo "API Report Files:"
