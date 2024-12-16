@@ -134,6 +134,7 @@ jobs:
           mkdir -p ./gh-pages
           cp -r ./ui-report ./gh-pages/ui-report
           cp -r ./api-report ./gh-pages/api-report
+          ls ./gh-pages/ui-report
 
       - name: Upload Combined Reports as Artifact
         uses: actions/upload-artifact@v3
