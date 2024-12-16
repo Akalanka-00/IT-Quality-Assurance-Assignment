@@ -70,7 +70,7 @@ jobs:
 
   run-api-tests:
     name: Run Playwright API Tests
-    needs: deploy-server  # Ensure this job runs after the JAR deployment
+    needs: run-ui-tests  # Ensure this job runs after the JAR deployment
     runs-on: ubuntu-latest
 
     steps:
@@ -85,10 +85,6 @@ jobs:
       - name: Install Dependencies for API Tests
         working-directory: ./api
         run: npm install
-
-      - name: Install Playwright Browsers
-        working-directory: ./api
-        run: npx playwright install --with-deps
 
       - name: Run Playwright API Tests
         working-directory: ./api
