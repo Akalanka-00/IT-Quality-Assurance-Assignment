@@ -50,16 +50,30 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Download and Start the JAR File
+      - name: Create Server Directory
+        run: mkdir -p server
+
+      - name: Download JAR File from Cloud
         run: |
-          wget --output-document=server/demo-0.0.1-SNAPSHOT.jar "https://your-jar-file-url"
-          nohup java -jar server/demo-0.0.1-SNAPSHOT.jar > server.log 2>&1 &
-          echo "Waiting for the server to start..."
-          until curl --silent --head http://localhost:7081/api/books; do
-            echo "Server not ready yet. Retrying in 2 seconds..."
-            sleep 2
-          done
-          echo "Server is up and running."
+          wget --output-document=server/demo-0.0.1-SNAPSHOT.jar "https://firebasestorage.googleapis.com/v0/b/flashmart-c51b3.appspot.com/o/demo-0.0.1-SNAPSHOT.jar?alt=media&token=df7721d4-e5fd-416a-9a26-a550bf1d0a53"
+
+      - name: Start the JAR File
+        run: |
+            nohup java -jar server/demo-0.0.1-SNAPSHOT.jar > server.log 2>&1 &
+            echo "Waiting for the server to start..."
+            until curl --silent --head http://localhost:7081/api/books; do
+              echo "Server not ready yet. Retrying in 2 seconds..."
+              sleep 2
+            done
+            echo "Server is up and running."
+
+      - name: Upload Server Log for Debugging
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: server-log
+          path: server.log
+
 
       - name: Install Node.js and Dependencies for API Tests
         uses: actions/setup-node@v3
@@ -67,7 +81,7 @@ jobs:
           node-version: '20'
 
       - name: Install Dependencies for API Tests
-        run: npm install
+        run: npm ci
         working-directory: ./api
 
       - name: Run Playwright API Tests
