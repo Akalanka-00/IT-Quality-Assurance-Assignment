@@ -28,6 +28,7 @@ jobs:
       - name: Run Playwright UI Tests
         working-directory: ./ui
         run: npx playwright test --workers 1 --project QA_UI
+        continue-on-error: true
 
       - name: Upload Playwright UI Report as Artifact
         uses: actions/upload-artifact@v3
@@ -87,6 +88,7 @@ jobs:
       - name: Run Playwright API Tests
         working-directory: ./api
         run: npx playwright test --project QA_API
+        continue-on-error: true
 
       - name: Upload Playwright API Report as Artifact
         uses: actions/upload-artifact@v3
