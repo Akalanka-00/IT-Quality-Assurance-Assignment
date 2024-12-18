@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "commonjs", // or "esnext" if using ES modules
+    "target": "esnext",
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "types": ["@playwright/test", "node"] // Ensure Playwright types are included
+  },
+  "include": ["**/*.ts", "node_modules/@playwright/test"]
+}
