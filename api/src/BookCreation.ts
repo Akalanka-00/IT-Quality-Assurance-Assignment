@@ -4,6 +4,7 @@ import {ServerResponse} from "../model/ServerResponse";
 import {UserRole} from "../enum/UserRole";
 import {Book} from "../model/Book";
 import {DataStore} from "../utils/DataStore";
+import { ServerResponse } from "http";
 
 export class BookCreation{
 
@@ -64,6 +65,18 @@ export class BookCreation{
         expect(duplicateResponse.statusText).toBe('');
         expect(duplicateResponse.json).toBe('"Book Already Exists"');
         console.log(`BooK save with duplicate data, successfully!`);
+    }
+    public async creatBookWithoutTitle(){
+        const data = DataStore.getInstance().getData();
+        const book:Book={
+            id: data.SharedData.randomInt,
+            title:null,
+            author:`${data.SharedData.randomStr}_AUTHOR`
+        };
+        const response:ServerResponse =await this.requestHandler.postRequest(UserRole.Admin, "/api/book");
+        expect(response.status).toBe(400);
+        expect(response.json.text).toBe(`"Title is required"`);
+        console.log(`Error for book without title:${response.json.text}`);
     }
 
 }
