@@ -18,28 +18,25 @@ export class BookCreation{
     public async createBookWithUser(){
         const data = DataStore.getInstance().getData();
         const book:Book = {
-            id: data.SharedData.randomInt,
             title: `${data.SharedData.randomStr}_TITLE`,
             author: `${data.SharedData.randomStr}_AUTHOR`
         }
         const response:ServerResponse = await this.requestHandler.postRequest(UserRole.User, "/api/books",book);
-        expect(response.status).toBe(403);
-        expect(response.json.text).toBe("User is not permitted.")
+        expect(response.status).toBe(201);
+        expect(response.json.title).toBe(book.title)
+        expect(response.json.author).toBe(book.author)
     }
 
-    public async createBook(){
+    public async createBookWithIntegerValues(){
         const data = DataStore.getInstance().getData();
         const book:Book = {
-            id: data.SharedData.randomInt,
-            title: `${data.SharedData.randomStr}_TITLE`,
-            author: `${data.SharedData.randomStr}_AUTHOR`
+            title: data.SharedData.randomInt,
+            author: data.SharedData.randomInt
         }
         const response:ServerResponse = await this.requestHandler.postRequest(UserRole.Admin, "/api/books",book);
-        expect(response.status).toBe(201);
+        expect(response.status).toBe(400);
         expect(response.statusText).toBe('');
-        expect(response.json.title).toBe(`${data.SharedData.randomStr}_TITLE`);
-        expect(response.json.author).toBe(`${data.SharedData.randomStr}_AUTHOR`);
-        console.log(`Book : ${data.SharedData.randomStr}_TITLE Successfully Saved.`);
+        expect(response.json.text).toBe("Invalid data type");
         return book;
 
     }
@@ -47,7 +44,6 @@ export class BookCreation{
     public async createSameBook(){
         const data = DataStore.getInstance().getData();
         const book:Book = {
-            id: data.SharedData.randomInt,
             title: `${data.SharedData.randomStr}_TITLE(Duplicated)`,
             author: `${data.SharedData.randomStr}_AUTHOR(Duplicated)`
         }
