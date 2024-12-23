@@ -19,7 +19,7 @@ export class BookCreation{
         const data = DataStore.getInstance().getData();
         const book:Book = {
             id: data.SharedData.randomInt,
-            title: `${data.SharedData.randomStr}_TITLEe`,
+            title: `${data.SharedData.randomStr}_TITLE`,
             author: `${data.SharedData.randomStr}_AUTHOR`
         }
         const response:ServerResponse = await this.requestHandler.postRequest(UserRole.User, "/api/books",book);
