@@ -4,7 +4,6 @@ import {ServerResponse} from "../model/ServerResponse";
 import {UserRole} from "../enum/UserRole";
 import {Book} from "../model/Book";
 import {DataStore} from "../utils/DataStore";
-import { ServerResponse } from "http";
 
 export class BookCreation{
 
@@ -73,10 +72,37 @@ export class BookCreation{
             title:null,
             author:`${data.SharedData.randomStr}_AUTHOR`
         };
-        const response:ServerResponse =await this.requestHandler.postRequest(UserRole.Admin, "/api/book");
+        const response:ServerResponse =await this.requestHandler.postRequest(UserRole.Admin, "/api/book",book);
         expect(response.status).toBe(400);
         expect(response.json.text).toBe(`"Title is required"`);
         console.log(`Error for book without title:${response.json.text}`);
+    }
+    public async createBookWithoutAuthor(){
+        const data = DataStore.getInstance().getData();
+        const book:Book = {
+            id: data.SharedData.randomInt,
+            title: `${data.SharedData.randomStr}_TITLE`,
+            author: null 
+        };
+    
+        const response:ServerResponse = await this.requestHandler.postRequest(UserRole.Admin, "/api/books", book);
+        expect(response.status).toBe(400);
+        expect(response.json.text).toBe('"Author is required"');
+        console.log(`Error for book without author: ${response.json.text}`);
+    }
+    
+    public async createBookWithIntegerId(){
+        const data = DataStore.getInstance().getData();
+        const book:Book = {
+            id: 12345, 
+            title: `${data.SharedData.randomStr}_TITLE`,
+            author: `${data.SharedData.randomStr}_AUTHOR`
+        };
+    
+        const response:ServerResponse = await this.requestHandler.postRequest(UserRole.Admin, "/api/books", book);
+        expect(response.status).toBe(400);
+        expect(response.json.text).toBe('"ID must be a string"');
+        console.log(`Error for book with integer ID: ${response.json.text}`);
     }
 
 }
