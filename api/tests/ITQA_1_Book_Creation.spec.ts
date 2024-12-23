@@ -8,9 +8,9 @@ test.describe('Book Creation', () => {
         await bookCreation.createBookWithUser();
     });
 
-    test('Create a book with valid data', async ({ request }) => {
+    test('Create a book with integer values', async ({ request }) => {
         const bookCreation:BookCreation = new BookCreation(request);
-        await bookCreation.createBook();
+        await bookCreation.createBookWithIntegerValues();
     });
 
     test('Create a book with duplicate data', async ({ request }) => {
