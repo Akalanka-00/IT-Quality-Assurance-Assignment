@@ -18,28 +18,36 @@ export class BookUpdate_2{
         const data = DataStore.getInstance().getData();
         const book:Book = {
             id: data.SharedData.randomInt,
-            title: `${data.SharedData.randomStr}_TiTle`,
-            author: `${data.SharedData.randomStr}_AUTHOR`
+            title: `${data.SharedData.randomStr}_Title_UPDATED`,
+            author: `${data.SharedData.randomStr}_Author_UPDATED`
         }
-        const response : ServerResponse = await this.requestHandler.putRequest(  UserRole.User,`/api/books/${book.id}`,book);
+
+        const response : ServerResponse = await this.requestHandler.putRequest(
+            UserRole.User,
+            `/api/books/${book.id}`,
+            book);
 
         expect(response.status).toBe(403);
         expect(response.json).toContain("User is not permitted.");
-        console.log(`Book Update: ${book.title} Successfully Updated.`);
+        console.log(`Book Update: ${book.title} book has Successfully Updated.`);
     }
 
     public async updateBookWithNonIntegerID(){
         const data = DataStore.getInstance().getData();
         const book: Book = {
             id: "Non-Integer_ID" as any, // Non-integer ID
-            title: `${data.SharedData.randomStr}_Title`,
-            author: `${data.SharedData.randomStr}_Author`
+            title: `${data.SharedData.randomStr}_Title_UPDATED`,
+            author: `${data.SharedData.randomStr}_Author_UPDATED`
         };
-        const response: ServerResponse = await this.requestHandler.putRequest(UserRole.Admin, `/api/books/${book.id}`, book);
+
+        const response: ServerResponse = await this.requestHandler.putRequest(
+            UserRole.Admin,
+            `/api/books/${book.id}`,
+            book);
 
         expect(response.status).toBe(400);
         //expect(response.json).toContain("Invalid ID format.");
-        console.log(`Book Update: ${book.title} could not be Updated with non-integer ID.`);
+        console.log(`Book Update: ${book.title} book could not be Updated with non-integer ID.`);
     }
 
     public async updateBookWithEmptyValues(){
@@ -58,5 +66,6 @@ export class BookUpdate_2{
 
         expect(response.status).toBe(400);
         expect(response.json.text).toContain("Mandatory parameters should not be null");
+        console.log(`Book Update: ${book.title} book could not be Updated with empty values for mandatory parameters.`);
     }
 }
