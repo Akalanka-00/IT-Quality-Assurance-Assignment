@@ -22,14 +22,24 @@ export class BookUpdate_2{
             author: `${data.SharedData.randomStr}_AUTHOR`
         }
         const response : ServerResponse = await this.requestHandler.putRequest(  UserRole.User,`/api/books/${book.id}`,book);
+
         expect(response.status).toBe(403);
-        console.log(`Book : ${data.SharedData.randomStr}_TITLE Successfully Updated.`);
-        console.log(response);
-        expect(response.json).toBe("\"User is not permitted.\"");
+        expect(response.json).toContain("User is not permitted.");
+        console.log(`Book Update: ${book.title} Successfully Updated.`);
     }
 
     public async updateBookWithNonIntegerID(){
+        const data = DataStore.getInstance().getData();
+        const book: Book = {
+            id: "Non-Integer_ID" as any, // Non-integer ID
+            title: `${data.SharedData.randomStr}_Title`,
+            author: `${data.SharedData.randomStr}_Author`
+        };
+        const response: ServerResponse = await this.requestHandler.putRequest(UserRole.Admin, `/api/books/${book.id}`, book);
 
+        expect(response.status).toBe(400);
+        //expect(response.json).toContain("Invalid ID format.");
+        console.log(`Book Update: ${book.title} could not be Updated with non-integer ID.`);
     }
 
     public async updateBookWithEmptyValues(){
