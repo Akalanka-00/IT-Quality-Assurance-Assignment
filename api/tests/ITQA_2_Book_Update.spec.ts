@@ -1,6 +1,5 @@
 import {test} from "playwright/test";
 import {BookUpdate_2} from "../src/BookUpdate_2";
-import {BookCreation} from "../src/BookCreation";
 
 test.describe('Book Update', () => {
 
