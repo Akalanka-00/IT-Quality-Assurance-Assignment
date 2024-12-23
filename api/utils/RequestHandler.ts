@@ -31,6 +31,12 @@ export class RequestHandler {
         return this.getResponse(response);
     }
 
+    public async deleteRequest( userRole:UserRole, url:string, param="") {
+        const headers = this.getHeader(userRole);
+        const response = await this.request.delete(`${url}/${param}`,  {headers: headers});
+        return this.getResponse(response);
+    }
+
 
     private getHeader( userRole:UserRole ){
         const data = this.dataStore.getData();
