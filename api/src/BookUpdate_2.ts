@@ -43,6 +43,20 @@ export class BookUpdate_2{
     }
 
     public async updateBookWithEmptyValues(){
+        const data = DataStore.getInstance().getData();
+        const book: Book = {
+            id: data.SharedData.randomInt,
+            title: "", // Empty title
+            author: "" // Empty author
+        };
 
+        const response: ServerResponse = await this.requestHandler.putRequest(
+            UserRole.Admin,
+            `/api/books/${book.id}`,
+            book
+        );
+
+        expect(response.status).toBe(400);
+        expect(response.json.text).toContain("Mandatory parameters should not be null");
     }
 }
