@@ -46,7 +46,9 @@ export class RequestHandler {
         const password:string = data.Authentication.password;
 
         const credentials= Buffer.from(`${username}:${password}`).toString('base64');
-        headers["Authorization"]= `Basic ${credentials}`
+        if(userRole !== UserRole.Unauthorized) {
+            headers["Authorization"] = `Basic ${credentials}`
+        }
         return headers;
 
     }
