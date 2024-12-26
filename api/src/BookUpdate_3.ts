@@ -4,14 +4,17 @@ import {ServerResponse} from "../model/ServerResponse";
 import {UserRole} from "../enum/UserRole";
 import {Book} from "../model/Book";
 import {DataStore} from "../utils/DataStore";
+import {BookCreation} from "./BookCreation";
 
 export class BookUpdate_3{
     private request:APIRequestContext;
     private requestHandler:RequestHandler;
+    private bookCreation: BookCreation;
 
     constructor(request:APIRequestContext){
         this.request = request;
         this.requestHandler = new RequestHandler(request);
+        this.bookCreation = new BookCreation(request);
     }
 
     public async updateNonExistentBook(){
@@ -43,11 +46,7 @@ export class BookUpdate_3{
             author: `${data.SharedData.randomStr}_Author_ToBeUPDATED`
         };
 
-        const responseCreate: ServerResponse = await this.requestHandler.postRequest(
-            UserRole.Admin,
-            "/api/books",
-            bookCreate
-        );
+        const responseCreate = await this.bookCreation.createBook(UserRole.User, bookCreate);
 
         const book: Book = {
             id: responseCreate.json.id,
@@ -57,8 +56,9 @@ export class BookUpdate_3{
 
         const response: ServerResponse = await this.requestHandler.putRequest(
             UserRole.Unauthorized,
-            `/api/books/${book.id}`,
-            book
+            `/api/books`,
+            book,
+            book.id
         );
 
     expect(response.status).toBe(401);

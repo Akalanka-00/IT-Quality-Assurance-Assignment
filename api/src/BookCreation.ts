@@ -15,16 +15,17 @@ export class BookCreation{
         this.requestHandler = new RequestHandler(request);
     }
 
-    public async createBookWithUser(){
+    public async createBook(userRole:UserRole, bookData?:Book){
         const data = DataStore.getInstance().getData();
-        const book:Book = {
+        const book:Book = bookData || {
             title: `${data.SharedData.randomStr}_TITLE`,
             author: `${data.SharedData.randomStr}_AUTHOR`
         }
-        const response:ServerResponse = await this.requestHandler.postRequest(UserRole.User, "/api/books",book);
+        const response:ServerResponse = await this.requestHandler.postRequest(userRole, "/api/books",book);
         expect(response.status).toBe(201);
-        expect(response.json.title).toBe(book.title)
-        expect(response.json.author).toBe(book.author)
+        expect(response.json.title).toBe(book.title);
+        expect(response.json.author).toBe(book.author);
+        return response;
     }
 
     public async createBookWithIntegerValues(){
