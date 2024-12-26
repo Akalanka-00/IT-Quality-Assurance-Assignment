@@ -10,10 +10,11 @@ test.describe('Book Update', () => {
 
     });
 
-    // test("Attempt to update a book without authentication", async ({ request }) => {
-    //     const bookUpdate3: BookUpdate_3 = new BookUpdate_3(request);
-    //     await bookUpdate3.updateBookWithoutAuthentication();
-    // });
+    test("Attempt to update a book without authentication", async ({ request }) => {
+        const bookUpdate3: BookUpdate_3 = new BookUpdate_3(request);
+        await bookUpdate3.updateBookWithoutAuthentication();
+    });
+
 
     test("Updating a Book with Same Title and Different Author", async ({ request }) => {
         const bookUpdate3: BookUpdate_3 = new BookUpdate_3(request);

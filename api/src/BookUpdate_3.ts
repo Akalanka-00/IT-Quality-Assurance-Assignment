@@ -33,7 +33,39 @@ export class BookUpdate_3{
     expect(response.status).toBe(404);
     expect(response.statusText).toBe('');
     console.log(`Book Update with non existent successfull:${data.SharedData.randomStr}_Could not be update non-existent book`);
-}
+
+  }
+
+    public async updateBookWithoutAuthentication(){
+        const data = DataStore.getInstance().getData();
+        const bookCreate: Book = {
+            title: `${data.SharedData.randomStr}_Title_ToBeUPDATED`,
+            author: `${data.SharedData.randomStr}_Author_ToBeUPDATED`
+        };
+
+        const responseCreate: ServerResponse = await this.requestHandler.postRequest(
+            UserRole.Admin,
+            "/api/books",
+            bookCreate
+        );
+
+        const book: Book = {
+            id: responseCreate.json.id,
+            title: `${data.SharedData.randomStr}_Title_UPDATED`,
+            author: `${data.SharedData.randomStr}_Title_UPDATE`
+        };
+
+        const response: ServerResponse = await this.requestHandler.putRequest(
+            UserRole.Unauthorized,
+            `/api/books/${book.id}`,
+            book
+        );
+
+    expect(response.status).toBe(401);
+    expect(response.json.text).toContain("Unauthorized");
+    console.log(`Book Update: Unauthorized access to update book with ID ${book.id}.`);
+
+    }
 
 
     public async updateBookWithSameTitleDifferentAuthor() {
@@ -70,8 +102,5 @@ export class BookUpdate_3{
         console.log(`Book Update: ${data.SharedData.randomStr}_book could not updated successfully with new author: ${book.author}.`);
 
     }
-
-    
-    
 
 }
