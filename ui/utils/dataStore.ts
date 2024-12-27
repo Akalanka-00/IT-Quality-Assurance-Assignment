@@ -1,5 +1,6 @@
 import {AuthData} from "../data/authentication/AuthData";
 import {SharedData} from "../data/shared/SharedData";
+import {LoginData} from "../data/authentication/LoginData";
 import {AuthenticationUrl} from "../data/urls/authentication.url";
 import {data} from "../data/data";
 
