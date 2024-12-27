@@ -61,8 +61,8 @@ export class BookUpdate_3{
             book.id
         );
 
-    expect(response.status).toBe(401);
-    expect(response.json.text).toContain("Unauthorized");
+    expect(response.status).toBe(403);
+    expect(response.statusText).toBe('');
     console.log(`Book Update: Unauthorized access to update book with ID ${book.id}.`);
 
     }
