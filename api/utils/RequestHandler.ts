@@ -31,16 +31,26 @@ export class RequestHandler {
         return this.getResponse(response);
     }
 
+    public async deleteRequest( userRole:UserRole, url:string, param="") {
+        const headers = this.getHeader(userRole);
+        const response = await this.request.delete(`${url}/${param}`,  {headers: headers});
+        return this.getResponse(response);
+    }
+
 
     private getHeader( userRole:UserRole ){
         const data = this.dataStore.getData();
         const headers = {};
-
+        let json;
         const username: string = userRole === UserRole.Admin ? data.Authentication.admin : data.Authentication.user;
         const password:string = data.Authentication.password;
 
         const credentials= Buffer.from(`${username}:${password}`).toString('base64');
-        headers["Authorization"]= `Basic ${credentials}`
+        if(userRole !== UserRole.Unauthorized) {
+            headers["Authorization"] = `Basic ${credentials}`
+        }
+        json = JSON.stringify(headers);
+        console.log(`header: ${json}`)
         return headers;
 
     }
