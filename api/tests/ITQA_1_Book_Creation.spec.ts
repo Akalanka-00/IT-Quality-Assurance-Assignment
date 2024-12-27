@@ -1,4 +1,4 @@
-import {test} from "playwright/test";
+import {request, test} from "playwright/test";
 import {BookCreation} from "../src/BookCreation";
 import {UserRole} from "../enum/UserRole";
 
@@ -18,4 +18,21 @@ test.describe('Book Creation', () => {
         const bookCreation:BookCreation = new BookCreation(request);
         await bookCreation.createSameBook();
     });
+
+    test('Create a book without title', async ({ request }) => {
+        const bookCreation:BookCreation = new BookCreation(request);
+        await bookCreation.creatBookWithoutTitle();
+    });
+
+    test('Create a book without author', async ({ request }) => {
+        const bookCreation:BookCreation = new BookCreation(request);
+        await bookCreation.createBookWithoutAuthor();
+    });
+    
+    test('Create a book with integer type ID', async ({ request }) => {
+        const bookCreation:BookCreation = new BookCreation(request);
+        await bookCreation.createBookWithIntegerId();
+    });
 });
+
+
