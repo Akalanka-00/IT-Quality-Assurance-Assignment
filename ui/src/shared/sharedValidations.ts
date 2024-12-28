@@ -1,7 +1,13 @@
 import {expect, Page, test} from "@playwright/test";
+import {PlaywrightConfig} from "../../utils/playwright.config";
 
-export class Shared{
+export class SharedValidations{
 
+    private playwrightConfig: PlaywrightConfig;
+
+    constructor(){
+        this.playwrightConfig = PlaywrightConfig.getInstance();
+    }
     public async validateTitle(page: Page, title: string){
         const pageTitle:string = await page.title();
         expect(pageTitle).toBe(title);
@@ -10,13 +16,10 @@ export class Shared{
 
     public async validateUrl(page: Page, url: string){
         const pageUrl:string = page.url();
-        const baseUrl = this.getBaseUrl();
+        const baseUrl = this.playwrightConfig.getBaseUrl();
         expect(pageUrl).toBe(`${baseUrl}${url}`);
         console.log(`Page title matches to ${pageUrl}`)
     }
 
-    public getBaseUrl(){
-        const projectName = test.info().project.name;
-        return test.info().config.projects.filter(p => p.name == projectName)[0].use.baseURL;
-    }
+
 }

@@ -1,6 +1,3 @@
-import {AuthData} from "../data/authentication/AuthData";
-import {SharedData} from "../data/shared/SharedData";
-import {Urls} from "../data/urls/Urls";
 import {data} from "../data/data";
 
 export class DataStore{
