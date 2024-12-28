@@ -1,6 +1,6 @@
 
 
-// Define your shared authentication data in the required format
+// Define your helper authentication data in the required format
 export const AuthData = {
     firstName:"",
     lastName:"",
@@ -8,6 +8,7 @@ export const AuthData = {
     password:"",
     isUserCreated: false,
     isLoggedIn: false,
+    token: "",
     registration:{
         title: "Register Account",
         placeholders:{
@@ -23,6 +24,40 @@ export const AuthData = {
             "If you have ANY questions about the operation of this online shop, please e-mail the store owner.",
             "A confirmation has been sent to the provided e-mail address. If you have not received it within the hour, please contact us."
         ]
+    },
+    login:{
+        title: "Account Login",
+        successMessage: "My Account",
+        successTitles:[
+            "My Account",
+            "My Orders",
+            "My Affiliate Account",
+            "Newsletter"
+        ],
+        successContents:[
+            [
+                "Edit your account information",
+                "Change your password",
+                "Modify your address book entries",
+                "Modify your wish list",
+            ],
+            [
+                "View your order history",
+                "Subscriptions",
+                "Downloads",
+                "Your Reward Points",
+                "View your return requests",
+                "Your Transactions",
+            ],
+            [
+                "Register for an affiliate account",
+            ],
+            [
+                "Subscribe / unsubscribe to newsletter",
+                ]
+        ],
+
+
     },
     logout:{
         title: "Account Logout",

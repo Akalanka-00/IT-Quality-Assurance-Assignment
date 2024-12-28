@@ -1,6 +1,6 @@
 import {PlaywrightConfig} from "../../utils/playwright.config";
 import {Page} from "playwright";
-import {SharedValidations} from "../shared/sharedValidations";
+import {PageHelper} from "../helper/pageHelper";
 import {AuthenticationUrl} from "../../data/urls/authentication.url";
 import {DataStore} from "../../utils/dataStore";
 import {expect} from "@playwright/test";
@@ -9,13 +9,13 @@ import {RegistrationLocators} from "../../locators/authentication/registration.l
 export class UserRegistration{
 
     private playWrightConfig: PlaywrightConfig;
-    private sharedValidations: SharedValidations;
+    private pageHelper: PageHelper;
     private dataStore: DataStore;
     private page: Page = undefined as unknown as Page;
 
     constructor(){
         this.playWrightConfig = PlaywrightConfig.getInstance();
-        this.sharedValidations = new SharedValidations();
+        this.pageHelper = new PageHelper();
         this.dataStore = DataStore.getInstance();
     }
 
@@ -23,7 +23,7 @@ export class UserRegistration{
         const data = this.dataStore.getData();
         this.page = await this.playWrightConfig.getPage();
         await this.page.goto(AuthenticationUrl.REGISTER_URL);
-        await this.sharedValidations.validateUrl(this.page, AuthenticationUrl.REGISTER_URL);
+        await this.pageHelper.validateUrl(this.page, AuthenticationUrl.REGISTER_URL);
 
         //Check the input fields of register account form
         await expect(this.page.locator(RegistrationLocators.FIRST_NAME_INPUT_FIELD)).toBeVisible();
@@ -66,8 +66,11 @@ export class UserRegistration{
     }
 
     public async verifyRegistrationSuccess(){
-        const data = this.dataStore.getData();
         this.page = await this.playWrightConfig.getPage();
+        const url = this.page.url();
+        this.pageHelper.fetchTokenFromUrl(url);
+        const data = this.dataStore.getData();
+        await this.pageHelper.validateUrl(this.page, AuthenticationUrl.REGISTER_SUCCESS, true);
         await expect(this.page.locator(RegistrationLocators.SUCCESS_REGISTRATION_TITLE)).toHaveText(data.AuthData.registration.successMessage);
         await expect(this.page.locator(RegistrationLocators.BREADCRUMB_HOME).getByText(data.AuthData.registration.successMessage)).toBeVisible();
         const successContent = data.AuthData.registration.successContent;
@@ -83,5 +86,8 @@ export class UserRegistration{
         console.log("User email: \t\t\x1b[32m", data.AuthData.email, "\x1b[0m");
         console.log("User password: \t\t\x1b[32m", data.AuthData.password, "\x1b[0m");
         console.log("\n");
+
     }
+
+
 }
