@@ -1,6 +1,6 @@
 import { Page } from "playwright";
 import { PlaywrightConfig } from "../../utils/playwright.config";
-import { SharedValidations } from "../shared/sharedValidations";
+import { PageHelper } from "../helper/pageHelper";
 import { AuthenticationUrl } from "../../data/urls/authentication.url";
 import { DataStore } from "../../utils/dataStore";
 import { expect } from "@playwright/test";
@@ -11,14 +11,14 @@ import {LoginLocators} from "../../locators/authentication/login.locator";
 export class UserLogin {
 
     private playWrightConfig: PlaywrightConfig;
-    private sharedValidations: SharedValidations;
+    private pageHelper: PageHelper;
     private userRegistration:UserRegistration;
     private dataStore: DataStore;
     private page: Page = undefined as unknown as Page;
 
     constructor() {
         this.playWrightConfig = PlaywrightConfig.getInstance();
-        this.sharedValidations = new SharedValidations();
+        this.pageHelper = new PageHelper();
         this.dataStore = DataStore.getInstance();
         this.userRegistration = new UserRegistration();
     }
@@ -38,7 +38,7 @@ export class UserLogin {
             await this.logout();
         }
         await this.page.goto(AuthenticationUrl.LOGIN_URL);
-        await this.sharedValidations.validateUrl(this.page, AuthenticationUrl.LOGIN_URL);
+        await this.pageHelper.validateUrl(this.page, AuthenticationUrl.LOGIN_URL);
 
         await expect(this.page.locator(LoginLocators.EMAIL_INPUT_FIELD)).toBeVisible();
         await expect(this.page.locator(LoginLocators.PASSWORD_INPUT_FIELD)).toBeVisible();
@@ -46,9 +46,9 @@ export class UserLogin {
         console.log("Login page input fields are verified");
     }
 
-    public async loginWithValidCredentials(forceLogin=false) {
+    public async loginWithValidCredentials() {
         const data = this.dataStore.getData();
-        if(data.AuthData.isLoggedIn && !forceLogin){
+        if(data.AuthData.isLoggedIn){
             console.log("User is already Logged In, skipping Login");
             return;
         }
@@ -57,36 +57,34 @@ export class UserLogin {
         await this.page.fill(LoginLocators.EMAIL_INPUT_FIELD, data.AuthData.email);
         await this.page.fill(LoginLocators.PASSWORD_INPUT_FIELD, data.AuthData.password);
         await this.page.click(LoginLocators.LOGIN_BUTTON);
+        console.log("email: \t\t", data.AuthData.email);
+        console.log("password: \t", data.AuthData.password);
+        await this.page.waitForTimeout(2000);
 
-        console.log("email: ", data.AuthData.email);
-        console.log("password: ", data.AuthData.password);
-
-        // Wait for the URL containing 'customer_token=' with "commit" as the condition
-        // await this.page.waitForURL(/\/account\/account&customer_token=/, { waitUntil: "commit" });
-        //
-        // console.log("Login attempt complete and navigation verified.");
     }
 
     public async verifySuccessfulLogin() {
-        const data = this.dataStore.getData();
-        if(data.AuthData.isLoggedIn){
+        if(this.dataStore.getData().AuthData.isLoggedIn){
             console.log("User is already Logged In, skipping Successful Login verification");
             return;
         }
         this.page = await this.playWrightConfig.getPage();
+        const url = this.page.url();
+        this.pageHelper.fetchTokenFromUrl(url);
+        const data = this.dataStore.getData();
+        await this.pageHelper.validateUrl(this.page, AuthenticationUrl.LOGIN_SUCCESS, true);
         this.dataStore.setData("AuthData.isLoggedIn", true);
-        // Verify the URL contains the customer token
-        // const currentUrl = this.page.url();
-        // console.log("Current URL after login attempt:", currentUrl);
-        // const isValidUrl = currentUrl.includes('customer_token=');
-        //
-        // expect(isValidUrl).toBeTruthy(); // Assert the presence of 'customer_token' in URL
-        // console.log("User successfully redirected to the account page.");
-        //
-        // // Optionally check for account page-specific content
-        // const accountHeading = this.page.locator("h2:has-text('My Account')"); // Update selector as per your page
-        // await expect(accountHeading).toBeVisible();
-
+        const titles = data.AuthData.login.successTitles;
+        const contentList = data.AuthData.login.successContents;
+        let contentCount = 0;
+        for (let title = 0; title < titles.length; title++) {
+            await expect(this.page.locator(LoginLocators.SUCCESS_LOGIN_TITLE).nth(title)).toHaveText(titles[title]);
+            const contents = contentList[title];
+            for (let content = 0; content < contents.length; content++) {
+                await expect(this.page.locator(LoginLocators.SUCCESS_LOGIN_CONTENT).nth(contentCount)).toHaveText(contents[content]);
+                contentCount++;
+            }
+        }
         console.log("User logged in successfully");
     }
 
