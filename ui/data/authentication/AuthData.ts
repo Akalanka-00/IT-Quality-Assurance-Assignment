@@ -23,6 +23,14 @@ export const AuthData = {
             "If you have ANY questions about the operation of this online shop, please e-mail the store owner.",
             "A confirmation has been sent to the provided e-mail address. If you have not received it within the hour, please contact us."
         ]
+    },
+    logout:{
+        title: "Account Logout",
+        logoutMessage: "Account Logout",
+        logoutContent:[
+            "You have been logged off your account. It is now safe to leave the computer.",
+            "Your shopping cart has been saved, the items inside it will be restored whenever you log back into your account."
+        ]
     }
 
 };

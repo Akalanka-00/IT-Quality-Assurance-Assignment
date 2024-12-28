@@ -4,12 +4,15 @@ import { SharedValidations } from "../shared/sharedValidations";
 import { AuthenticationUrl } from "../../data/urls/authentication.url";
 import { DataStore } from "../../utils/dataStore";
 import { expect } from "@playwright/test";
-import { LoginLocators } from "../../locators/authentication/login.locator";
+import {UserRegistration} from "./registration";
+import {HeaderLocators} from "../../locators/common/header.locator";
+import {LoginLocators} from "../../locators/authentication/login.locator";
 
 export class UserLogin {
 
     private playWrightConfig: PlaywrightConfig;
     private sharedValidations: SharedValidations;
+    private userRegistration:UserRegistration;
     private dataStore: DataStore;
     private page: Page = undefined as unknown as Page;
 
@@ -17,10 +20,23 @@ export class UserLogin {
         this.playWrightConfig = PlaywrightConfig.getInstance();
         this.sharedValidations = new SharedValidations();
         this.dataStore = DataStore.getInstance();
+        this.userRegistration = new UserRegistration();
     }
 
     public async verifyLoginPage() {
+        const data = this.dataStore.getData();
         this.page = await this.playWrightConfig.getPage();
+        if(data.AuthData.isLoggedIn){
+            console.log("User is already Logged In, skipping Login Page verification");
+            return;
+        }
+        if(!data.AuthData.isUserCreated){
+            console.log("User is not created, creating user...\n");
+            await this.userRegistration.verifyRegistrationPage();
+            await this.userRegistration.registerAccount();
+            await this.userRegistration.verifyRegistrationSuccess();
+            await this.logout();
+        }
         await this.page.goto(AuthenticationUrl.LOGIN_URL);
         await this.sharedValidations.validateUrl(this.page, AuthenticationUrl.LOGIN_URL);
 
@@ -32,7 +48,7 @@ export class UserLogin {
 
     public async loginWithValidCredentials(forceLogin=false) {
         const data = this.dataStore.getData();
-        if(data.LoginData.isUserLoggedIn && !forceLogin){
+        if(data.AuthData.isLoggedIn && !forceLogin){
             console.log("User is already Logged In, skipping Login");
             return;
         }
@@ -52,6 +68,13 @@ export class UserLogin {
     }
 
     public async verifySuccessfulLogin() {
+        const data = this.dataStore.getData();
+        if(data.AuthData.isLoggedIn){
+            console.log("User is already Logged In, skipping Successful Login verification");
+            return;
+        }
+        this.page = await this.playWrightConfig.getPage();
+        this.dataStore.setData("AuthData.isLoggedIn", true);
         // Verify the URL contains the customer token
         // const currentUrl = this.page.url();
         // console.log("Current URL after login attempt:", currentUrl);
@@ -65,6 +88,27 @@ export class UserLogin {
         // await expect(accountHeading).toBeVisible();
 
         console.log("User logged in successfully");
+    }
+
+    public async logout(){
+        const data = this.dataStore.getData();
+        if(!data.AuthData.isLoggedIn){
+            console.log("User is not logged in, skipping logout");
+            return;
+        }
+        this.page = await this.playWrightConfig.getPage();
+        await this.page.locator(HeaderLocators.MY_ACCOUNT_DROPDOWN).click();
+        await this.page.locator(HeaderLocators.MY_ACCOUNT_DROPDOWN_ITEM).nth(4).click();
+        expect(await this.page.locator(LoginLocators.ACCOUNT_LOGOUT_TITLE).textContent()).toBe(data.AuthData.logout.logoutMessage);
+        const logoutContent = data.AuthData.logout.logoutContent;
+        for(let i=0; i<logoutContent.length; i++){
+            expect(await this.page.locator(LoginLocators.ACCOUNT_LOGOUT_CONTENT).nth(i).textContent()).toBe(logoutContent[i]);
+        }
+        await expect(this.page.locator(LoginLocators.CONTINUE_BUTTON)).toBeVisible();
+        await this.page.locator(LoginLocators.CONTINUE_BUTTON).click();
+        await this.page.waitForTimeout(2000);
+        this.dataStore.setData("AuthData.isLoggedIn", false);
+        console.log("User logged out successfully");
     }
 
 }
