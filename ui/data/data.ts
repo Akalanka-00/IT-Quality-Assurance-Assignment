@@ -3,5 +3,5 @@ import {AuthData} from "./authentication/AuthData";
 
 export const data = {
     SharedData,
-    AuthData
+    AuthData,
 }

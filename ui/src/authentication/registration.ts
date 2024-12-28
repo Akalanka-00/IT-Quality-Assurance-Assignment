@@ -82,8 +82,6 @@ export class UserRegistration{
         console.log("User last name: \t\x1b[32m", data.AuthData.lastName, "\x1b[0m");
         console.log("User email: \t\t\x1b[32m", data.AuthData.email, "\x1b[0m");
         console.log("User password: \t\t\x1b[32m", data.AuthData.password, "\x1b[0m");
-
-
         console.log("\n");
     }
 }
