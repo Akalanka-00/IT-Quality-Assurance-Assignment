@@ -9,7 +9,7 @@ test.describe('Book Deletion', () => {
         await bookDeletion.deleteBookWithInvalidParam();
     });
 
-    test.only('delete a book with Null param', async ({ request }) => {
+    test('delete a book with Null param', async ({ request }) => {
         const bookDeletion:BookDeletion = new BookDeletion(request);
         await bookDeletion.deleteBookWithNullParam();
     });
