@@ -2,8 +2,6 @@ import {APIRequestContext, expect} from "@playwright/test";
 import {RequestHandler} from "../utils/RequestHandler";
 import {ServerResponse} from "../model/ServerResponse";
 import {UserRole} from "../enum/UserRole";
-import {Book} from "../model/Book";
-import {DataStore} from "../utils/DataStore";
 
 export class BookDeletion{
 
@@ -38,8 +36,7 @@ export class BookDeletion{
     } 
     
     public async deleteBookWithValidParamAsAdmin(){
-        
-       
+
         // const param="";
         // const response:ServerResponse = await this.requestHandler.deleteRequest(UserRole.Admin, "/api/books",param);
        
