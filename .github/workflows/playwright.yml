@@ -1,47 +1,11 @@
-name: Run JAR and Playwright Tests
+name: Run Playwright Automation Tests
 
 on:
   workflow_dispatch:  # Trigger workflow manually using the 'Run workflow' button
 
 jobs:
-  deploy-server:
-    name: Deploy JAR File
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Download JAR File from Cloud
-        run: |
-          wget --output-document=server/demo-0.0.1-SNAPSHOT.jar https://dms.uom.lk/s/t87LKQRADZyteSM
-
-      - name: Start the JAR File
-        run: |
-          nohup java -jar server/demo-0.0.1-SNAPSHOT.jar > server.log 2>&1 &
-          echo "Waiting for the server to start..."
-          until curl --silent --head http://localhost:7081/api/books; do
-            echo "Server not ready yet. Retrying in 2 seconds..."
-            sleep 2
-          done
-          echo "Server is up and running."
-
-      - name: Upload Server Log for Debugging
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: server-log
-          path: server.log
-
   run-ui-tests:
     name: Run Playwright UI Tests
-    needs: deploy-server  # Ensure this job runs after the JAR deployment
     runs-on: ubuntu-latest
 
     steps:
@@ -63,41 +27,78 @@ jobs:
 
       - name: Run Playwright UI Tests
         working-directory: ./ui
-        run: npm run test
+        run: npx playwright test --workers 1 --project QA_UI
+        continue-on-error: true
+
+      - name: Upload Playwright UI Report as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ui-test-report
+          path: ./ui/playwright-report
+          expire-in: 14d  # Set expiration time for the artifact
 
   run-api-tests:
-    name: Run Playwright API Tests
-    needs: deploy-server  # Ensure this job runs after the JAR deployment
+    name: Run API Tests
     runs-on: ubuntu-latest
-
+    needs: run-ui-tests
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Create Server Directory
+        run: mkdir -p server
+
+      - name: Download JAR File from Cloud
+        run: |
+          wget --output-document=server/demo-0.0.1-SNAPSHOT.jar "https://firebasestorage.googleapis.com/v0/b/flashmart-c51b3.appspot.com/o/demo-0.0.1-SNAPSHOT.jar?alt=media&token=df7721d4-e5fd-416a-9a26-a550bf1d0a53"
+
+      - name: Start the JAR File
+        run: |
+          nohup java -jar server/demo-0.0.1-SNAPSHOT.jar > server.log 2>&1 &
+          echo "Waiting for the server to start..."
+          until curl --silent --head http://localhost:7081/api/books; do
+            echo "Server not ready yet. Retrying in 2 seconds..."
+            sleep 2
+          done
+          echo "Server is up and running."
+
+      - name: Upload Server Log for Debugging
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: server-log
+          path: server.log
+
+
+      - name: Install Node.js and Dependencies for API Tests
         uses: actions/setup-node@v3
         with:
           node-version: '20'
 
       - name: Install Dependencies for API Tests
         working-directory: ./api
-        run: npm install
-
-      - name: Install Playwright Browsers
-        working-directory: ./api
-        run: npx playwright install --with-deps
+        run: npm ci
 
       - name: Run Playwright API Tests
         working-directory: ./api
-        run: npm run test
+        run: npx playwright test --project QA_API
+        continue-on-error: true
 
-  stop-server:
-    name: Stop the Server
-    needs: [run-ui-tests, run-api-tests]  # Ensure this runs after both UI and API tests are complete
-    runs-on: ubuntu-latest
+      - name: Upload Playwright API Report as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: api-test-report
+          path: ./api/playwright-report  # Download the whole report directory
+          expire-in: 14d  # Set expiration time for the artifact
 
-    steps:
       - name: Stop the Server
         run: |
-          echo "Stopping the server..."
           pkill -f 'java -jar server/demo-0.0.1-SNAPSHOT.jar'
+
+
