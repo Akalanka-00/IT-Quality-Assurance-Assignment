@@ -62,7 +62,6 @@ jobs:
   run-api-tests:
     name: Run API Tests
     runs-on: ubuntu-latest
-    needs: run-ui-tests
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -168,7 +167,7 @@ jobs:
   deploy-api-report:
     name: Deploy API Allure Report to GitHub Pages
     runs-on: ubuntu-latest
-    needs: [run-api-tests, cleanup-gh-pages]  # Ensure this depends on the API test job
+    needs: deploy-ui-report  # Ensure this depends on the API test job
 
     steps:
       # Step 1: Checkout repository
