@@ -124,43 +124,77 @@ jobs:
           pkill -f 'java -jar server/demo-0.0.1-SNAPSHOT.jar'
 
 
-  deploy-ui-report:
-    name: Deploy UI Allure Report to GitHub Pages
+  cleanup-gh-pages:
+    name: Cleanup gh-pages branch
     runs-on: ubuntu-latest
-    needs: run-ui-tests
-
     steps:
-      # Step 1: Checkout repository
       - name: Checkout Repository
         uses: actions/checkout@v4
-
-      # Step 2: Download UI report artifact
-      - name: Download UI Report Artifact
-        uses: actions/download-artifact@v3
         with:
-          name: allure-report
-          path: allure-report
+          fetch-depth: 0  # Fetch the entire history to ensure gh-pages branch is available
 
-      # Step 3: Deploy UI Allure Report to GitHub Pages
-      - name: Deploy UI Allure Report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: allure-report  # Directory where UI report is placed
-          keep_files: false
+      - name: Setup Git User
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-  deploy-api-report:
-      name: Deploy API Allure Report to GitHub Pages
-      runs-on: ubuntu-latest
-      needs: run-api-tests
+      - name: Delete all files in gh-pages branch
+        run: |
+          git switch gh-pages || git checkout --orphan gh-pages
+          git rm -rf . || true
+          echo "Cleaning the branch..." > README.md  # Add a placeholder file
+          git add .
+          git commit -m "Clean gh-pages branch"
+          git push origin gh-pages --force
+          
 
-      steps:
-        - name: Checkout Repository
-          uses: actions/checkout@v4
-
-        - name: Deploy API Allure Report to GitHub Pages
-          uses: peaceiris/actions-gh-pages@v3
-          with:
-            github_token: ${{ secrets.GH_TOKEN }}
-            publish_dir: ./api/allure-report
-            destination_dir: api-report
+#  deploy-ui-report:
+#    name: Deploy UI Allure Report to GitHub Pages
+#    runs-on: ubuntu-latest
+#    needs: run-ui-tests
+#
+#    steps:
+#      # Step 1: Checkout repository
+#      - name: Checkout Repository
+#        uses: actions/checkout@v4
+#
+#      # Step 2: Download UI report artifact
+#      - name: Download UI Report Artifact
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: allure-report
+#          path: allure-report
+#
+#      # Step 3: Deploy UI Allure Report to GitHub Pages
+#      - name: Deploy UI Allure Report to GitHub Pages
+#        uses: peaceiris/actions-gh-pages@v4
+#        with:
+#          github_token: ${{ secrets.GH_TOKEN }}
+#          publish_dir: allure-report  # Directory where UI report is placed
+#          keep_files: true
+#
+#  deploy-api-report:
+#    name: Deploy API Allure Report to GitHub Pages
+#    runs-on: ubuntu-latest
+#    needs: run-api-tests  # Ensure this depends on the API test job
+#
+#    steps:
+#      # Step 1: Checkout repository
+#      - name: Checkout Repository
+#        uses: actions/checkout@v3
+#
+#      # Step 2: Download API report artifact
+#      - name: Download API Report Artifact
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: api-test-report  # Ensure this matches the artifact name in the API test job
+#          path: ./allure-report
+#
+#      # Step 3: Deploy API Allure Report to GitHub Pages
+#      - name: Deploy API Allure Report to GitHub Pages
+#        uses: peaceiris/actions-gh-pages@v4
+#        with:
+#          github_token: ${{ secrets.GH_TOKEN }}
+#          publish_dir: ./allure-report  # Path to downloaded API report
+#          destination_dir: api-report  # Deploy under 'api-report' directory
+#          keep_files: true  # Preserve files from other deployments (e.g., UI report)
