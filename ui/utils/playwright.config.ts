@@ -21,7 +21,8 @@ export class PlaywrightConfig {
     // Method to initialize and return the page object
     public async getPage(): Promise<Page> {
         if (!this.browser) {
-            this.browser = await firefox.launch({ headless: false });
+            const isHeadless = process.env.HEADLESS === 'true';
+            this.browser = await firefox.launch({ headless: isHeadless });
         }
 
         if (!this.context) {
