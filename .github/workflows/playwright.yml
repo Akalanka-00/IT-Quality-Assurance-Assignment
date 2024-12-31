@@ -136,7 +136,7 @@ jobs:
       - name: Deploy UI Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: ./ui/allure-report
           destination_dir: ui-report
 
@@ -152,6 +152,6 @@ jobs:
         - name: Deploy API Allure Report to GitHub Pages
           uses: peaceiris/actions-gh-pages@v3
           with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
+            github_token: ${{ secrets.GH_TOKEN }}
             publish_dir: ./api/allure-report
             destination_dir: api-report
