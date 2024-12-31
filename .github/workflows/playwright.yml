@@ -45,7 +45,7 @@ jobs:
 
       - name: Run Playwright UI Tests
         working-directory: ./ui
-        run: cucumber-js --format json:allure-results/results.json
+        run: npx cucumber-js --format json:allure-results/results.json
         continue-on-error: true
 
       - name: Upload Playwright UI Report as Artifact
