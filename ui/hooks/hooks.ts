@@ -1,11 +1,12 @@
-import {After, AfterAll, BeforeAll, setDefaultTimeout} from "@cucumber/cucumber";
+import {After, AfterAll, BeforeAll} from "@cucumber/cucumber";
 import {PlaywrightConfig} from "../utils/playwright.config";
-import {type} from "node:os";
 
 const playwrightConfig:PlaywrightConfig = PlaywrightConfig.getInstance();
 
 BeforeAll(async function () {
     console.log('Global setup: Initializing Playwright browser and context.');
+    const isHeadless = !!process.env['CI']; // Check if the environment is CI
+    console.log('Launching browser in headless mode:', isHeadless);
     const page = await playwrightConfig.getPage(); // Initialize the Playwright page object
     console.log('Page initialized:', await page.title());
     console.log('***********************************************************');

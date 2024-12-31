@@ -23,7 +23,7 @@ export class PlaywrightConfig {
         if (!this.browser) {
             const isHeadless = !!process.env['CI']; // Check if the environment is CI
             console.log('Launching browser in headless mode:', isHeadless);
-            this.browser = await firefox.launch({ headless: isHeadless });
+            this.browser = await firefox.launch({ headless: true });
         }
 
         if (!this.context) {
