@@ -127,25 +127,17 @@ jobs:
   cleanup-gh-pages:
     name: Cleanup gh-pages branch
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Deploy Empty Files to Clear gh-pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          fetch-depth: 0  # Fetch the entire history to ensure gh-pages branch is available
-
-      - name: Setup Git User
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Delete all files in gh-pages branch
-        run: |
-          git switch gh-pages || git checkout --orphan gh-pages
-          git rm -rf . || true
-          echo "Cleaning the branch..." > README.md  # Add a placeholder file
-          git add .
-          git commit -m "Clean gh-pages branch"
-          git push origin gh-pages --force
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: ./empty-dir  # An empty directory
+          keep_files: false  # Remove all existing files in the gh-pages branch
           
 
 #  deploy-ui-report:
