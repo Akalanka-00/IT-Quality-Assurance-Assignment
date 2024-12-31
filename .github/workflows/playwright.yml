@@ -140,11 +140,6 @@ jobs:
           name: ui-test-report  # Name of the artifact uploaded in the run-ui-tests job
           path: ./ui/allure-report  # Specify where to extract the artifact
 
-      - name: List files before deployment
-        run: |
-          echo "Listing files and folders in the allure-report directory:"
-          ls -R allure-report
-
       # Step 3: Deploy UI Allure Report to GitHub Pages
       - name: Deploy UI Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
