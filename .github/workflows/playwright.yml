@@ -132,22 +132,22 @@ jobs:
     steps:
       # Step 1: Checkout repository
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Step 2: Download UI report artifact
       - name: Download UI Report Artifact
         uses: actions/download-artifact@v3
         with:
-          name: ui-test-report  # Name of the artifact uploaded in the run-ui-tests job
-          path: ./ui/allure-report  # Specify where to extract the artifact
+          name: allure-report
+          path: allure-report
 
       # Step 3: Deploy UI Allure Report to GitHub Pages
       - name: Deploy UI Allure Report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: ./ui/allure-report  # Directory where UI report is placed
-          destination_dir: ui-report       # Deploy it under the ui-report folder
+          publish_dir: allure-report  # Directory where UI report is placed
+          keep_files: false
 
   deploy-api-report:
       name: Deploy API Allure Report to GitHub Pages
