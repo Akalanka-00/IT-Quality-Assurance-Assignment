@@ -50,7 +50,7 @@ jobs:
 
       - name: Generate Allure Report
         working-directory: ./ui
-        run: allure generate allure-results --clean && allure open
+        run: allure generate allure-results --clean
 
       - name: Upload Playwright UI Report as Artifact
         uses: actions/upload-artifact@v3
