@@ -121,28 +121,12 @@ jobs:
       - name: Stop the Server
         run: |
           pkill -f 'java -jar server/demo-0.0.1-SNAPSHOT.jar'
-
-
-  cleanup-gh-pages:
-    name: Cleanup gh-pages branch
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Deploy Empty Files to Clear gh-pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: ./empty-dir  # An empty directory
-          keep_files: false  # Remove all existing files in the gh-pages branch
           
 
   deploy-ui-report:
     name: Deploy UI Allure Report to GitHub Pages
     runs-on: ubuntu-latest
-    needs: [run-ui-tests, cleanup-gh-pages]
+    needs: run-ui-tests
 
     steps:
       # Step 1: Checkout repository
@@ -154,7 +138,12 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ui-test-report  # Name of the artifact uploaded in the run-ui-tests job
-          path: ./ui/allure-report
+          path: ./allure-report
+
+      - name: List files before deployment
+        run: |
+          echo "Listing files and folders in the allure-report directory:"
+          ls -R allure-report
 
       # Step 3: Deploy UI Allure Report to GitHub Pages
       - name: Deploy UI Allure Report to GitHub Pages
