@@ -152,7 +152,7 @@ jobs:
           github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: allure-report  # Directory where UI report is placed
           destination_dir: ui-report
-          keep_files: true
+          keep_files: false
 
 #  deploy-api-report:
 #    name: Deploy API Allure Report to GitHub Pages
