@@ -48,6 +48,10 @@ jobs:
         run: npx cucumber-js --format json:allure-results/results.json
         continue-on-error: true
 
+      - name: Generate Allure Report
+        working-directory: ./ui
+        run: allure generate allure-results --clean && allure open
+
       - name: Upload Playwright UI Report as Artifact
         uses: actions/upload-artifact@v3
         with:
