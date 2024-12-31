@@ -167,7 +167,7 @@ jobs:
   deploy-api-report:
     name: Deploy API Allure Report to GitHub Pages
     runs-on: ubuntu-latest
-    needs: deploy-ui-report  # Ensure this depends on the API test job
+    needs: [cleanup-gh-pages, run-ui-tests, deploy-ui-report]  # Ensure this depends on the API test job
 
     steps:
       # Step 1: Checkout repository
