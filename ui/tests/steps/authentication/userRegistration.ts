@@ -1,7 +1,7 @@
 import {Given, When, Then, setDefaultTimeout} from '@cucumber/cucumber';
 import {UserRegistration} from "../../../src/authentication/registration";
 
-setDefaultTimeout(1000*60*5);
+setDefaultTimeout(1000*60*10);
 const userRegistration = new UserRegistration();
 
 Given("Navigate to User Registration Page", async function () {

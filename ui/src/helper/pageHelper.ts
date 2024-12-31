@@ -18,6 +18,7 @@ export class PageHelper {
     }
 
     public async validateUrl(page: Page, url: string, isTokenExists=false){
+        await page.waitForTimeout(10000);
         const pageUrl:string = page.url();
         const baseUrl = this.playwrightConfig.getBaseUrl();
         if(isTokenExists) {

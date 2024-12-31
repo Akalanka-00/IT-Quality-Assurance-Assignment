@@ -16,7 +16,7 @@
       "ts-node/register"
     ],
     "format": [
-      "progress-bar",
+      "allure-cucumberjs/reporter",
       "html:reports/cucumber-report.html",
       "json:reports/cucumber-report.json"
     ]

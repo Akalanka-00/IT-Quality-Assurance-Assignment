@@ -25,16 +25,34 @@ jobs:
         working-directory: ./ui
         run: npx playwright install --with-deps
 
+      - name: Install Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set JAVA_HOME Environment Variable
+        run: |
+          echo "JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))" >> $GITHUB_ENV
+          echo "JAVA_HOME is set to: $JAVA_HOME"
+
+      - name: Download and Extract Allure
+        run: |
+          wget https://github.com/allure-framework/allure2/releases/download/2.32.0/allure-2.32.0.tgz -O allure-2.32.0.tgz
+          tar -zxvf allure-2.32.0.tgz
+          sudo mv allure-2.32.0 /opt/allure
+          echo "/opt/allure/bin" >> $GITHUB_PATH
+
       - name: Run Playwright UI Tests
         working-directory: ./ui
-        run: npx playwright test --workers 1 --project QA_UI
+        run: cucumber-js --format json:allure-results/results.json
         continue-on-error: true
 
       - name: Upload Playwright UI Report as Artifact
         uses: actions/upload-artifact@v3
         with:
           name: ui-test-report
-          path: ./ui/playwright-report
+          path: ./ui/allure-report
           expire-in: 14d  # Set expiration time for the artifact
 
   run-api-tests:
@@ -87,14 +105,14 @@ jobs:
 
       - name: Run Playwright API Tests
         working-directory: ./api
-        run: npx playwright test --project QA_API
+        run: cucumber-js --format json:allure-results/results.json
         continue-on-error: true
 
       - name: Upload Playwright API Report as Artifact
         uses: actions/upload-artifact@v3
         with:
           name: api-test-report
-          path: ./api/playwright-report  # Download the whole report directory
+          path: ./api/allure-results  # Download the whole report directory
           expire-in: 14d  # Set expiration time for the artifact
 
       - name: Stop the Server
@@ -102,3 +120,34 @@ jobs:
           pkill -f 'java -jar server/demo-0.0.1-SNAPSHOT.jar'
 
 
+  deploy-ui-report:
+    name: Deploy UI Allure Report to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: run-ui-tests
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Deploy UI Allure Report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./ui/allure-report
+          destination_dir: ui-report
+
+  deploy-api-report:
+      name: Deploy API Allure Report to GitHub Pages
+      runs-on: ubuntu-latest
+      needs: run-api-tests
+
+      steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v3
+
+        - name: Deploy API Allure Report to GitHub Pages
+          uses: peaceiris/actions-gh-pages@v3
+          with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_dir: ./api/allure-report
+            destination_dir: api-report
