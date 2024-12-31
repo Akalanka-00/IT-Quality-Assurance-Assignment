@@ -1,3 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","15253","User registration with valid data","","Tue Dec 31 21:05:13 UTC 2024","failed","Tue Dec 31 21:05:28 UTC 2024","","","",""
-"","41050","Login with valid credentials","","Tue Dec 31 21:05:28 UTC 2024","failed","Tue Dec 31 21:06:09 UTC 2024","","","",""
