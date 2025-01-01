@@ -2,6 +2,10 @@ name: Run Playwright Automation Tests
 
 on:
   workflow_dispatch:  # Trigger workflow manually using the 'Run workflow' button
+  pull_request:
+    branches:
+      - development  # Trigger on PR targeting the 'development' branch
+      - master       # Trigger on PR targeting the 'master' branch
 
 jobs:
   run-ui-tests:
