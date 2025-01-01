@@ -79,6 +79,18 @@ jobs:
         run: |
           wget --output-document=server/demo-0.0.1-SNAPSHOT.jar "https://firebasestorage.googleapis.com/v0/b/flashmart-c51b3.appspot.com/o/demo-0.0.1-SNAPSHOT.jar?alt=media&token=df7721d4-e5fd-416a-9a26-a550bf1d0a53"
 
+      - name: Set JAVA_HOME Environment Variable
+        run: |
+          echo "JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))" >> $GITHUB_ENV
+          echo "JAVA_HOME is set to: $JAVA_HOME"
+
+      - name: Download and Extract Allure
+        run: |
+          wget https://github.com/allure-framework/allure2/releases/download/2.32.0/allure-2.32.0.tgz -O allure-2.32.0.tgz
+          tar -zxvf allure-2.32.0.tgz
+          sudo mv allure-2.32.0 /opt/allure
+          echo "/opt/allure/bin" >> $GITHUB_PATH
+
       - name: Start the JAR File
         run: |
           nohup java -jar server/demo-0.0.1-SNAPSHOT.jar > server.log 2>&1 &
@@ -152,10 +164,10 @@ jobs:
           keep_files: false       # Ensure all files are removed
 
 
-  deploy-reports:
-    name: Deploy Allure Reports to GitHub Pages
+  deploy-ui-report:
+    name: Deploy UI Allure Report to GitHub Pages
     runs-on: ubuntu-latest
-    needs: clear-gh-pages  # Ensure dependencies are met
+    needs: [run-ui-tests, clear-gh-pages]
 
     steps:
       # Step 1: Checkout repository
@@ -166,28 +178,40 @@ jobs:
       - name: Download UI Report Artifact
         uses: actions/download-artifact@v3
         with:
-          name: ui-test-report  # Name of the UI test artifact
-          path: ./ui/allure-report  # Path to extract the UI report
+          name: ui-test-report  # Name of the artifact uploaded in the run-ui-tests job
+          path: ./ui/allure-report  # Specify where to extract the artifact
 
-      # Step 3: Download API report artifact
-      - name: Download API Report Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: api-test-report  # Name of the API test artifact
-          path: ./api/allure-report  # Path to extract the API report
-
-      # Step 4: Deploy Allure Reports to GitHub Pages
-      - name: Deploy Allure Reports to GitHub Pages
+      # Step 3: Deploy UI Allure Report to GitHub Pages
+      - name: Deploy UI Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: ./  # Root directory for GitHub Pages deployment
-          keep_files: true # Retain other files while deploying
+          publish_dir: ./ui/allure-report  # Directory where UI report is placed
+          destination_dir: ui-report       # Deploy it under the ui-report folder
+          keep_files: false
 
-      # Step 5: Structure the deployed directories
-      - name: Organize Deployed Reports
-        run: |
-          mkdir -p ./ui-report ./api-report
-          mv ./ui/allure-report/* ./ui-report/
-          mv ./api/allure-report/* ./api-report/
-          echo "UI and API reports are organized under respective directories"
+  deploy-api-report:
+      name: Deploy API Allure Report to GitHub Pages
+      runs-on: ubuntu-latest
+      needs: [run-api-tests, deploy-ui-report]  # Ensure this depends on the API test job
+
+      steps:
+        # Step 1: Checkout repository
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+
+        # Step 2: Download API report artifact
+        - name: Download API Report Artifact
+          uses: actions/download-artifact@v3
+          with:
+            name: api-test-report  # Ensure this matches the artifact name in the API test job
+            path: ./api/allure-report
+
+        # Step 3: Deploy API Allure Report to GitHub Pages
+        - name: Deploy API Allure Report to GitHub Pages
+          uses: peaceiris/actions-gh-pages@v4
+          with:
+            github_token: ${{ secrets.GH_TOKEN }}
+            publish_dir: ./api/allure-report  # Directory where UI report is placed
+            destination_dir: api-report       # Deploy it under the ui-report folder
+            keep_files: true
