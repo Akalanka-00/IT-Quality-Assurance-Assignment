@@ -123,10 +123,32 @@ jobs:
           pkill -f 'java -jar server/demo-0.0.1-SNAPSHOT.jar'
           
 
+  clear-gh-pages:
+    name: Clear GitHub Pages
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2: Create an empty directory
+      - name: Create Empty Directory
+        run: mkdir empty-dir
+
+      # Step 3: Deploy Empty Directory to GitHub Pages
+      - name: Clear GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: empty-dir  # Deploy the empty directory to clear existing files
+          keep_files: false       # Ensure all files are removed
+
+
   deploy-ui-report:
     name: Deploy UI Allure Report to GitHub Pages
     runs-on: ubuntu-latest
-    needs: run-ui-tests
+    needs: [run-ui-tests, clear-gh-pages]
 
     steps:
       # Step 1: Checkout repository
