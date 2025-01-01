@@ -4,19 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cucumber-js test"
+    "test": "npx cucumber-js test --format progress",
+    "test:allure": "npx cucumber-js test --format json:allure-results/results.json",
+    "test:cucumber": "cucumber-js test",
+    "allure:generate": "allure generate allure-results --clean",
+    "allure:open": "allure open",
+    "allure-report": "allure generate allure-results --clean && allure open"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@cucumber/cucumber": "^11.1.1",
-    "@playwright/test": "^1.44.1",
-    "@types/node": "^20.17.9",
+    "@playwright/test": "^1.49.1",
+    "allure-commandline": "^2.32.0",
+    "allure-cucumberjs": "^3.0.7",
+    "cucumber-html-reporter": "^7.2.0",
+    "dotenv": "^16.4.7",
+    "playwright": "^1.49.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
-  },
-  "dependencies": {
-    "playwright": "^1.44.1"
   }
 }
