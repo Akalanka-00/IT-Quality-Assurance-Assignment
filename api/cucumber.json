@@ -16,8 +16,8 @@
       "ts-node/register"
     ],
     "format": [
-      "html:reports/cucumber-report.html",
-      "json:reports/cucumber-report.json"
+      "json:allure-results/results.json",
+      "allure-cucumberjs/reporter"
     ]
   }
 }

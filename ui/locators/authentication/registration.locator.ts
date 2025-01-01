@@ -10,4 +10,6 @@ export class RegistrationLocators{
     public static SUCCESS_REGISTRATION_TITLE:string = "#content h1";
     public static SUCCESS_REGISTRATION_CONTENT:string = "#content p";
     public static BREADCRUMB_HOME: string = ".breadcrumb a";
+
+    public static ERROR_MESSAGE: string = "#alert  .alert-danger";
 }
