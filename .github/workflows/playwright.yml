@@ -45,14 +45,14 @@ jobs:
 
       - name: Run Playwright UI Tests
         working-directory: ./ui
-        run: npx cucumber-js --format json:allure-results/results.json
+        run: npx cucumber-js test --format progress --format json:allure-results/results.json
         continue-on-error: true
 
       - name: Generate Allure Report
         working-directory: ./ui
         run: allure generate allure-results --clean
 
-      - name: Upload Playwright UI Report as Artifact
+      - name: Upload Allure UI Report as Artifact
         uses: actions/upload-artifact@v3
         with:
           name: ui-test-report
@@ -108,10 +108,14 @@ jobs:
 
       - name: Run Playwright API Tests
         working-directory: ./api
-        run: cucumber-js --format json:allure-results/results.json
+        run: npx cucumber-js test --format progress --format json:allure-results/results.json
         continue-on-error: true
 
-      - name: Upload Playwright API Report as Artifact
+      - name: Generate Allure Report
+        working-directory: ./api
+        run: allure generate allure-results --clean
+
+      - name: Upload Playwright Allure Report as Artifact
         uses: actions/upload-artifact@v3
         with:
           name: api-test-report
@@ -126,6 +130,9 @@ jobs:
   clear-gh-pages:
     name: Clear GitHub Pages
     runs-on: ubuntu-latest
+    needs:
+      - run-ui-tests
+      - run-api-tests
 
     steps:
       # Step 1: Checkout repository
@@ -148,7 +155,7 @@ jobs:
   deploy-reports:
     name: Deploy Allure Reports to GitHub Pages
     runs-on: ubuntu-latest
-    needs: [run-ui-tests, run-api-tests, clear-gh-pages]  # Ensure dependencies are met
+    needs: clear-gh-pages  # Ensure dependencies are met
 
     steps:
       # Step 1: Checkout repository
