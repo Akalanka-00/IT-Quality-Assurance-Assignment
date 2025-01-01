@@ -1,4 +1,4 @@
-Feature: Book Creation
+Feature: Book Update
 
   Background:
     Given When valid baseUrl is provided
