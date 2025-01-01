@@ -1,0 +1,7 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","340","Create a book with duplicate data","","Wed Jan 01 13:42:40 UTC 2025","passed","Wed Jan 01 13:42:41 UTC 2025","","","",""
+"","1","Create a book without an author","","Wed Jan 01 13:42:41 UTC 2025","passed","Wed Jan 01 13:42:41 UTC 2025","","","",""
+"","2","Create a book with an integer type ID","","Wed Jan 01 13:42:41 UTC 2025","passed","Wed Jan 01 13:42:41 UTC 2025","","","",""
+"","5","Create a book without a title","","Wed Jan 01 13:42:41 UTC 2025","passed","Wed Jan 01 13:42:41 UTC 2025","","","",""
+"","513","Create a book with a user role","","Wed Jan 01 13:42:40 UTC 2025","passed","Wed Jan 01 13:42:40 UTC 2025","","","",""
+"","90","Create a book with integer values","","Wed Jan 01 13:42:40 UTC 2025","failed","Wed Jan 01 13:42:40 UTC 2025","","","",""
