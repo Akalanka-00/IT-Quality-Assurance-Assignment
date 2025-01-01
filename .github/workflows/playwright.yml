@@ -45,7 +45,7 @@ jobs:
 
       - name: Run Playwright UI Tests
         working-directory: ./ui
-        run: npx cucumber-js test --format json:allure-results/results.json
+        run: npx cucumber-js --format json:allure-results/results.json
         continue-on-error: true
 
       - name: Generate Allure Report
@@ -120,7 +120,7 @@ jobs:
 
       - name: Run Playwright API Tests
         working-directory: ./api
-        run: npx cucumber-js test --format json:allure-results/results.json
+        run: npx cucumber-js --format json:allure-results/results.json
         continue-on-error: true
 
       - name: Generate Allure Report
