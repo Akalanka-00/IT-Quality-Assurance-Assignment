@@ -23,7 +23,8 @@ export const AuthData = {
             "You can now take advantage of member privileges to enhance your online shopping experience with us.",
             "If you have ANY questions about the operation of this online shop, please e-mail the store owner.",
             "A confirmation has been sent to the provided e-mail address. If you have not received it within the hour, please contact us."
-        ]
+        ],
+        existingEmailError: " Warning: E-Mail Address is already registered! ",
     },
     login:{
         title: "Account Login",

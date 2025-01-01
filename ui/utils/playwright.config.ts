@@ -34,6 +34,8 @@ export class PlaywrightConfig {
 
         if (!this.page) {
             this.page = await this.context.newPage();
+            this.page.setDefaultTimeout(1000*60);
+            this.page.setDefaultNavigationTimeout(1000*60);
             await this.page.goto(this.baseUrl);
         }
 

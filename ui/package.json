@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cucumber-js --format json:allure-results/results.json",
+    "test": "npx cucumber-js --format progress",
     "test:cucumber": "cucumber-js test",
     "allure:generate": "allure generate allure-results --clean",
     "allure:open": "allure open",
