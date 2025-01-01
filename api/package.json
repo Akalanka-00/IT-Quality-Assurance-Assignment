@@ -4,14 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test --workers 1 --project QA_API --headed"
+    "test": "cucumber-js test"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@cucumber/cucumber": "^11.1.1",
     "@playwright/test": "^1.44.1",
-    "@types/node": "^20.14.2"
+    "@types/node": "^20.17.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
   },
   "dependencies": {
     "playwright": "^1.44.1"

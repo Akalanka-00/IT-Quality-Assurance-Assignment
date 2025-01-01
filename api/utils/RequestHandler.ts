@@ -40,7 +40,7 @@ export class RequestHandler {
 
     private getHeader( userRole:UserRole ){
         const data = this.dataStore.getData();
-        const headers = {};
+        const headers: Record<string, string> = {};
         let json;
         const username: string = userRole === UserRole.Admin ? data.Authentication.admin : data.Authentication.user;
         const password:string = data.Authentication.password;
@@ -49,8 +49,6 @@ export class RequestHandler {
         if(userRole !== UserRole.Unauthorized) {
             headers["Authorization"] = `Basic ${credentials}`
         }
-        json = JSON.stringify(headers);
-        console.log(`header: ${json}`)
         return headers;
 
     }
