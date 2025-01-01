@@ -17,6 +17,7 @@
     ],
     "format": [
       "json:allure-results/results.json",
+      "progress",
       "allure-cucumberjs/reporter"
     ]
   }
