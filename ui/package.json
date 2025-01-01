@@ -1,0 +1,28 @@
+{
+  "name": "ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx cucumber-js --format progress",
+    "test:cucumber": "cucumber-js test",
+    "allure:generate": "allure generate allure-results --clean",
+    "allure:open": "allure open",
+    "allure-report": "allure generate allure-results --clean && allure open"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.1.1",
+    "@playwright/test": "^1.49.1",
+    "allure-commandline": "^2.32.0",
+    "allure-cucumberjs": "^3.0.7",
+    "cucumber-html-reporter": "^7.2.0",
+    "dotenv": "^16.4.7",
+    "playwright": "^1.49.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+
+}
