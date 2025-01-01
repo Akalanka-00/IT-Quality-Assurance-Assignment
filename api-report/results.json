@@ -1,0 +1,433 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "book-creation;create-a-book-with-a-user-role",
+        "keyword": "Scenario",
+        "line": 7,
+        "name": "Create a book with a user role",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "When valid baseUrl is provided",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10634072
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "New book data is provided",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:31"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 337237
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "Set User Role to User",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:22"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 461049
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 10,
+            "name": "I create a book",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:35"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 394263524
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 11,
+            "name": "the book should be created successfully",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:39"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 113933055
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "book-creation;create-a-book-with-integer-values",
+        "keyword": "Scenario",
+        "line": 13,
+        "name": "Create a book with integer values",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "When valid baseUrl is provided",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1665373
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 14,
+            "name": "I provide integer values for book fields",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:49"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 291422
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 15,
+            "name": "Set User Role to Admin",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:17"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 633720
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 16,
+            "name": "I attempt to create a book",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:56"
+            },
+            "result": {
+              "status": "failed",
+              "duration": 101865373,
+              "error_message": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 400\nReceived: 201\n    at Proxy.<anonymous> (/home/runner/work/IT-Quality-Assurance-Assignment/IT-Quality-Assurance-Assignment/api/node_modules/playwright/lib/matchers/expect.js:227:37)\n    at BookCreation.createBookWithIntegerValues (/home/runner/work/IT-Quality-Assurance-Assignment/IT-Quality-Assurance-Assignment/api/src/BookCreation.ts:43:33)\n    at async World.<anonymous> (/home/runner/work/IT-Quality-Assurance-Assignment/IT-Quality-Assurance-Assignment/api/tests/steps/bookCreation.steps.ts:58:18)"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 17,
+            "name": "the book should be created successfully",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:39"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "book-creation;create-a-book-with-duplicate-data",
+        "keyword": "Scenario",
+        "line": 19,
+        "name": "Create a book with duplicate data",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "When valid baseUrl is provided",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1023046
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 20,
+            "name": "New book data is provided for duplicate book",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:67"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 152645
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 21,
+            "name": "Set User Role to User",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:22"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 123318
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 22,
+            "name": "I create a book",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:35"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 83037230
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 23,
+            "name": "the book should be created successfully",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:39"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 81507959
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 24,
+            "name": "I attempt to create the same book",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:75"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 85398882
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 25,
+            "name": "the system should not contain duplicate books",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:80"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 85231742
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "book-creation;create-a-book-without-a-title",
+        "keyword": "Scenario",
+        "line": 27,
+        "name": "Create a book without a title",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "When valid baseUrl is provided",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 995106
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 28,
+            "name": "Book provided with missing title",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 29,
+            "name": "I attempt to create the book",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 30,
+            "name": "the system should respond with an error for missing title",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "book-creation;create-a-book-without-an-author",
+        "keyword": "Scenario",
+        "line": 32,
+        "name": "Create a book without an author",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "When valid baseUrl is provided",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 867878
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 33,
+            "name": "I do not provide an author for the book",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 34,
+            "name": "I attempt to create the book",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 35,
+            "name": "the system should respond with an error for missing author",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "book-creation;create-a-book-with-an-integer-type-id",
+        "keyword": "Scenario",
+        "line": 37,
+        "name": "Create a book with an integer type ID",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "When valid baseUrl is provided",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 756740
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 38,
+            "name": "I provide an integer as the book ID",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 39,
+            "name": "I attempt to create the book",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 40,
+            "name": "the book should be created successfully",
+            "match": {
+              "location": "tests/steps/bookCreation.steps.ts:39"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "book-creation",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Book Creation",
+    "tags": [],
+    "uri": "tests/features/bookCreation.feature"
+  }
+]
