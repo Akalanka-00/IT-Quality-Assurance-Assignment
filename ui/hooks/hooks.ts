@@ -1,6 +1,5 @@
-import {After, AfterAll, BeforeAll, setDefaultTimeout} from "@cucumber/cucumber";
+import {After, AfterAll, BeforeAll} from "@cucumber/cucumber";
 import {PlaywrightConfig} from "../utils/playwright.config";
-import {type} from "node:os";
 
 const playwrightConfig:PlaywrightConfig = PlaywrightConfig.getInstance();
 

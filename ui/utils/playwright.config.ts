@@ -21,7 +21,9 @@ export class PlaywrightConfig {
     // Method to initialize and return the page object
     public async getPage(): Promise<Page> {
         if (!this.browser) {
-            this.browser = await firefox.launch({ headless: false });
+            const isHeadless = !!process.env['CI']; // Check if the environment is CI
+            console.log('Launching browser in headless mode:', isHeadless);
+            this.browser = await firefox.launch({ headless: isHeadless });
         }
 
         if (!this.context) {
@@ -32,6 +34,8 @@ export class PlaywrightConfig {
 
         if (!this.page) {
             this.page = await this.context.newPage();
+            this.page.setDefaultTimeout(1000*60);
+            this.page.setDefaultNavigationTimeout(1000*60);
             await this.page.goto(this.baseUrl);
         }
 
