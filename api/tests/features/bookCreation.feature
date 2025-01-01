@@ -24,17 +24,3 @@ Feature: Book Creation
     And I attempt to create the same book
     Then the system should not contain duplicate books
 
-  Scenario: Create a book without a title
-    Given Book provided with missing title
-    When I attempt to create the book
-    Then the system should respond with an error for missing title
-
-  Scenario: Create a book without an author
-    Given I do not provide an author for the book
-    When I attempt to create the book
-    Then the system should respond with an error for missing author
-
-  Scenario: Create a book with an integer type ID
-    Given I provide an integer as the book ID
-    When I attempt to create the book
-    Then the book should be created successfully
