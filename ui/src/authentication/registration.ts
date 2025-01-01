@@ -94,7 +94,6 @@ export class UserRegistration{
         const url = this.page.url();
         this.pageHelper.fetchTokenFromUrl(url);
         const data = this.dataStore.getData();
-        await this.page.pause();
         await this.pageHelper.validateUrl(this.page, AuthenticationUrl.REGISTER_SUCCESS, true);
         await expect(this.page.locator(RegistrationLocators.SUCCESS_REGISTRATION_TITLE)).toHaveText(data.AuthData.registration.successMessage);
         await expect(this.page.locator(RegistrationLocators.BREADCRUMB_HOME).getByText(data.AuthData.registration.successMessage)).toBeVisible();
