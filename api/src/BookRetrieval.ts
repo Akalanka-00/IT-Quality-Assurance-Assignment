@@ -18,7 +18,7 @@ export class BookRetrieval {
       expect(response.status).toBe(200);
       expect(response.json).toBeInstanceOf(Array);
       console.log(`All books retrieved successfully for role: ${role}.`);
-        return response.json;
+      return response.json;
   }
 
   public async retrieveBookById(role: UserRole, bookId: number) {
@@ -35,11 +35,13 @@ export class BookRetrieval {
     expect(response.status).toBe(404);
     expect(response.json).toBe('"Book not found"');
     console.log(`Attempted to retrieve book with invalid ID: ${bookId}`);
+    return response.json;
   }
 
   public async retrieveBookByInvalidIDorNull(role:UserRole,param:String){
     const response: ServerResponse = await this.requestHandler.getRequest(role,`/api/books/${param}`);
     expect(response.status).toBe(400);
     console.log(`Attempted to retrieve book with invalid or null parameter: ${param}`);
+    return response;
   }
 }
