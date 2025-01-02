@@ -1,7 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","86","Update a book with Invalid values (Non-Integer ID)","","Wed Jan 01 20:26:47 UTC 2025","passed","Wed Jan 01 20:26:47 UTC 2025","","","",""
-"","113","Update a book with Empty values for Mandatory (Author and Title)","","Wed Jan 01 20:26:47 UTC 2025","failed","Wed Jan 01 20:26:48 UTC 2025","","","",""
-"","367","Create a book with duplicate data","","Wed Jan 01 20:26:47 UTC 2025","passed","Wed Jan 01 20:26:47 UTC 2025","","","",""
-"","139","Create a book with integer values","","Wed Jan 01 20:26:47 UTC 2025","failed","Wed Jan 01 20:26:47 UTC 2025","","","",""
-"","356","Update a book with User Role","","Wed Jan 01 20:26:47 UTC 2025","passed","Wed Jan 01 20:26:47 UTC 2025","","","",""
-"","568","Create a book with a user role","","Wed Jan 01 20:26:46 UTC 2025","passed","Wed Jan 01 20:26:47 UTC 2025","","","",""
