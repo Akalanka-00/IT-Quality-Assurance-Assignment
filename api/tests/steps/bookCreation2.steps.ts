@@ -11,12 +11,12 @@ const contextCreator: ApiContextCreator = new ApiContextCreator();
  * Common Steps
  */
 
-Given("I am logged in as an admin user", function () {
+Given("I am logged in as an admin user2", function () {
   this.userRole = UserRole.Admin;
   console.log("User Role set to Admin");
 });
 
-Given("When valid baseUrl is provided", async function () {
+Given("When valid baseUrl is provided2", async function () {
   this.request = await contextCreator.createApiContext();
 });
 
@@ -32,24 +32,24 @@ Given("I provide a book with an author but no title", function () {
   };
 });
 
-When("I attempt to create the book", async function () {
+When("I attempt to create the book2", async function () {
   const bookCreation: BookCreation = new BookCreation(this.request);
   this.response = await bookCreation.createBook(this.userRole, this.book);
+
+  if (!this.response.status || this.response.status !== 201) {
+    throw new Error(`Expected status 201 but received "${this.response.status}"`);
+  }
 });
 
-Then("the system should respond with an error message {string}", async function () {
+Then("the system should respond with an error message for missing {string}", async function () {
     const data = DataStore.getInstance().getData();
     const expectedErrorMessage=data.BookData.missingValues.title;
   if (this.response.status !== 400) {
     throw new Error(`Expected status 400 but received ${this.response.status}`);
   }
-//   expect(this.response.status).not.toBe(400)
   if (!this.response.body.error || this.response.body.error !== expectedErrorMessage) {
     throw new Error(`Expected error message "${expectedErrorMessage}" but received "${this.response.body.error}"`);
   }
-    // expect(this.response.status).toBe(400); 
-    // expect(this.response.body.error).toBeDefined();
-    // expect(this.response.body.error).toBe(expectedErrorMessage);
 });
 
 /**
@@ -68,16 +68,12 @@ Given("I provide a book with a title but no author", function () {
   Then("the system should respond with an error message {string}", async function () {
       const data = DataStore.getInstance().getData();
       const expectedErrorMessage=data.BookData.missingValues.author;
-  //   if (this.response.status !== 400) {
-  //     throw new Error(`Expected status 400 but received ${this.response.status}`);
-  //   }
-    expect(this.response.status).not.toBe(400)
-  //   if (!this.response.body.error || this.response.body.error !== expectedErrorMessage) {
-  //     throw new Error(`Expected error message "${expectedErrorMessage}" but received "${this.response.body.error}"`);
-  //   }
-      expect(this.response.status).toBe(400); 
-      expect(this.response.body.error).toBeDefined();
-      expect(this.response.body.error).toBe(expectedErrorMessage);
+    if (this.response.status !== 400) {
+      throw new Error(`Expected status 400 but received ${this.response.status}`);
+    }
+    if (!this.response.body.error || this.response.body.error !== expectedErrorMessage) {
+      throw new Error(`Expected error message "${expectedErrorMessage}" but received "${this.response.body.error}"`);
+    }
   });
 
 
@@ -88,7 +84,7 @@ Given("I provide a book with a title but no author", function () {
 Given("I set the book ID as an integer value", function () {
     const data = DataStore.getInstance().getData();
     this.book = {
-      id: data.SharedData.randomInt, // Integer ID
+      id: data.SharedData.randomInt, 
       title: `${data.SharedData.randomStr}_TITLE`,
       author: `${data.SharedData.randomStr}_AUTHOR`,
     };
@@ -105,12 +101,9 @@ Given("I set the book ID as an integer value", function () {
   Then("the system should respond with an error message", async function () {
     const data = DataStore.getInstance().getData();
     const expectedErrorMessage=data.BookData.missingValues.id;
-    // if (this.response.status !== 400) {
-    //   throw new Error(`Expected status 400 but received ${this.response.status}`);
-    // }
-    
-    expect(this.response.status).not.toBe(400);
-    console.log("11111111111=",this.response.json.text);
+    if (this.response.status !== 400) {
+      throw new Error(`Expected status 400 but received ${this.response.status}`);
+    }
   
     const error = this.response.json.text;
     if (!error || error !== expectedErrorMessage) {
@@ -119,10 +112,9 @@ Given("I set the book ID as an integer value", function () {
   });
   
   Then("the book should be created successfully", async function () {
-    // if (this.response.status !== 201) {
-    //   throw new Error(`Expected status 201 but received ${this.response.status}`);
-    // }
-    expect(this.response.status).not.toBe(201);
+    if (this.response.status !== 201) {
+      throw new Error(`Expected status 201 but received ${this.response.status}`);
+    }
   
     const createdBook = this.response.body;
     if (!createdBook || createdBook.title !== this.book.title || createdBook.author !== this.book.author) {

@@ -1,5 +1,7 @@
 export const BookData = {
-    error:"Missing Title",
-    error2:"Missing ID",
-    error3:"Missing Author"
-}
+    missingValues: {
+      id: "Missing ID",
+      title: "Missing Title",
+      author: "Missing Author"
+    }
+  };
