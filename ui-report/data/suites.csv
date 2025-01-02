@@ -1,4 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","2547","Login with valid credentials","","Thu Jan 02 12:23:13 UTC 2025","passed","Thu Jan 02 12:23:15 UTC 2025","","","",""
-"","11947","User registration with valid data","","Thu Jan 02 12:22:45 UTC 2025","passed","Thu Jan 02 12:22:57 UTC 2025","","","",""
-"","15370","User registration with existing email address","","Thu Jan 02 12:22:57 UTC 2025","passed","Thu Jan 02 12:23:13 UTC 2025","","","",""
