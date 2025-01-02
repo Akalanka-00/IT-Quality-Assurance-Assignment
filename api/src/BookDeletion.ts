@@ -43,6 +43,6 @@ export class BookDeletion{
         // expect(response.status).toBe(405);
         // expect(response.json).toBe('""')
         // console.log("Null param test passed");
-    }2
+    }
 
 }
