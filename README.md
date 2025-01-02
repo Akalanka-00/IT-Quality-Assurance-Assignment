@@ -1,4 +1,4 @@
-# IT Quality Assurance Assignment
+# IT Quality Assurance Assignment - Group 34
 
 This repository contains test cases for UI and API testing using **Cucumber** with **Playwright** in **TypeScript**. The project is divided into two parts:
 
