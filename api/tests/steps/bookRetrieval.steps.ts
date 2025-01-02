@@ -4,7 +4,7 @@ import { BookRetrieval } from "../../src/BookRetrieval";
 
 let bookRetrieval: BookRetrieval;
 
-// Retrieve all books for a user role
+// Retrieve all books for a user role as admin
 
 When('the user retrieves all books', async function () {
   bookRetrieval = new BookRetrieval(this.request);
@@ -15,7 +15,7 @@ Then('the system should return a list of all books', function () {
   expect(this.response).toBeInstanceOf(Array);
 })
 
-// Retrieve a book by ID for a user role
+// Retrieve a book by ID for a user role as user
 
 When('the user retrieves a book by its ID', async function () {
   const bookId = 1; 
@@ -29,7 +29,7 @@ Then('the system should return the book details', async function () {
 
 });
 
-// Retrieve a book by a non-existing ID for a user role
+// Retrieve a book by a non-existing ID for a user role as user
 
 When('the user attempts to retrieve a book by a non-existing ID', async function () {
   const bookId = 500;
@@ -40,9 +40,9 @@ Then('the system should return an error message for non-existent book', async fu
   expect(this.response).toBe('"Book not found"');
 });
 
-// Attempt to retrieve a book by an invalid or null ID for a user role
+// Attempt to retrieve a book by an invalid or for a user role as admin
 
-When('the user attempts to retrieve a book by an invalid or null ID', async function () {
+When('the user attempts to retrieve a book by an invalid', async function () {
   const bookId = '"2"';
   this.response = await bookRetrieval.retrieveBookByInvalidIDorNull(this.userRole, bookId);
 });
