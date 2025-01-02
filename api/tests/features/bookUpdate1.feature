@@ -14,7 +14,7 @@ Feature: Book Update
   Scenario: Update a book with Invalid values (Non-Integer ID)
     Given Set User Role to Admin
     When I attempt to update the book with the non-integer ID
-#    Then The update should fail with a 400 status code
+    Then The update should fail with a 400 status code
 
   Scenario: Update a book with Empty values for Mandatory (Author and Title)
     Given New book data is provided for update book

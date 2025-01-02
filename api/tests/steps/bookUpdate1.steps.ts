@@ -1,10 +1,6 @@
 import {Given, Then, When} from '@cucumber/cucumber';
-import {ApiContextCreator} from "../../utils/apiContextCreator";
 import {BookUpdate1} from "../../src/BookUpdate1";
 import {DataStore} from "../../utils/DataStore";
-import {UserRole} from "../../enum/UserRole";
-
-let bookUpdate1: BookUpdate1;
 
 /**
  Scenario 1: Update a book with User Role
@@ -39,7 +35,7 @@ When(/^I attempt to update the book with the non-integer ID$/, async function ()
 
 Then(/^The update should fail with a 400 status code$/, async function () {
     const bookUpdate1:BookUpdate1 = new BookUpdate1(this.request);
-    await bookUpdate1.verifyBookUpdateFailed(this.response, this.book);
+    await bookUpdate1.verifyInvalidBookUpdate(this.response);
 });
 
 /**
