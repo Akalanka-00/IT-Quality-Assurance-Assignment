@@ -7,7 +7,7 @@ import {DataStore} from "../utils/DataStore";
 import {BookCreation} from "./BookCreation";
 import { BookRetrieval } from "./BookRetrieval";
 
-export class BookUpdate_33{
+export class BookUpdate2{
    
     private request:APIRequestContext;
     private requestHandler:RequestHandler;
@@ -138,7 +138,7 @@ export class BookUpdate_33{
     /**
      * Step 1: Create a book with a valid title and author.
      */
-    
+
     public async createBookWithSameTitleDifferentAuthor() {
         const data = DataStore.getInstance().getData();
         const bookCreate: Book = {
