@@ -4,7 +4,7 @@ Feature: Wishlist Management
     Given Login with valid user credentials
 
   Scenario: Add a product to the wishlist from the products page
-    Given I navigate to the products page
+    Given I navigate to the home page
     When I add the product "MacBook" to the wishlist
     Then The product "MacBook" should be listed in the wishlist
 
