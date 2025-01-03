@@ -34,7 +34,8 @@ export class Wishlist {
             console.log(`Product found: ${name}`);
 
             if (name?.trim() === productName) {
-                console.log("trying to click add to wishlist button..")
+                console.log("trying to click add to wishlist button..");
+                await this.page.waitForTimeout(2000);
                 await productElements.nth(i).locator(WishlistLocators.ADD_TO_WISHLIST_BUTTON).nth(1).click();
                 console.log(`Clicked "Add to Wishlist" for product: "${productName}".`);
                 // Verify success message
@@ -58,6 +59,7 @@ export class Wishlist {
 
     // Verify the product exists in the wishlist
     public async verifyProductInWishlist(productName: string) {
+        await this.page.waitForTimeout(2000);
         const items = this.page.locator(WishlistLocators.WISHLIST_ITEM_NAME);
         const count = await items.count();
 
@@ -69,6 +71,18 @@ export class Wishlist {
             }
         }
         throw new Error(`Product "${productName}" not found in wishlist.`);
+    }
+
+    public async verifyProductNotInWishlist(productName: string) {
+        const items = this.page.locator(WishlistLocators.WISHLIST_ITEM_NAME);
+        const count = await items.count();
+
+        for (let i = 0; i < count; i++) {
+            const name = await items.nth(i).textContent();
+            if (name?.trim() === productName) {
+                throw new Error(`Product "${productName}" is still listed in the wishlist.`);
+            }
+        }
     }
 
     // Remove product from the wishlist
