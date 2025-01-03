@@ -1,9 +1,7 @@
 Feature: Add Address
 
   Background:
-    Given Navigate to Login Page
-    And Submit the login form with valid credentials
-    And User should be logged in successfully
+    Given Login with valid user credentials
     And Navigate to Address Book Page
 
   Scenario: Add a new address with valid details
