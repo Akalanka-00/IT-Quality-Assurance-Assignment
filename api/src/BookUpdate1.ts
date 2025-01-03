@@ -30,18 +30,6 @@ export class BookUpdate1 {
         console.log(`Verification Passed: Book update failed as expected with ID: ${bookId}`);
     }
 
-    // public async verifyBookUpdate(response:ServerResponse,bookData:Book){
-    //     const bookRetrieval:BookRetrieval = new BookRetrieval(this.request);
-    //     const bookId:number = response.json.id;
-    //     const json = await bookRetrieval.retrieveBookById(UserRole.Admin, bookId);
-    //     expect(json.title).toBe(bookData.title);
-    //     expect(json.author).toBe(bookData.author);
-    //     console.log(json.title);
-    //     console.log(bookData.title);
-    //     console.log(`Book Updated Successfully with ID: ${bookId}`);
-    // }
-
-
     public async updateBookWithUser(response: ServerResponse, userRole:UserRole, book:Book){
         const data = DataStore.getInstance().getData();
         const bookUpdate:Book = {

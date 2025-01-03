@@ -1,5 +1,5 @@
 import { Browser, BrowserContext, firefox, Page } from 'playwright';
-import {BaseURL} from "../data/urls/baseURL";
+import {BaseURL} from "../data/urls/baseURL.url";
 
 export class PlaywrightConfig {
     private static instance: PlaywrightConfig;
