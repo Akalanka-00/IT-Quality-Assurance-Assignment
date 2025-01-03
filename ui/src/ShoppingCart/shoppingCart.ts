@@ -24,12 +24,12 @@ public async addProductToCart() {
     console.log("Verified product is added to wishlist.");
 }
 
-public async removeProductFromWishlist() {
+public async removeProductFromCart() {
     this.page = await this.playWrightConfig.getPage();
     await this.page.click(ShoppingCartLocators.REMOVE_FROM_CART_BUTTON);
-    console.log("Clicked Remove from Wishlist button.");
+    console.log("Clicked Remove from Cart button.");
     await expect(this.page.locator(ShoppingCartLocators.SUCCESS_MESSAGE)).toHaveText(/Product removed from cart/);
-    console.log("Verified product is removed from wishlist.");
+    console.log("Verified product is removed from Cart.");
 }
 
 }
