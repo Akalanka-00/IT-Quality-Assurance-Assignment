@@ -1,12 +1,9 @@
 import {Given, Then, When} from '@cucumber/cucumber';
-import {ApiContextCreator} from "../../utils/apiContextCreator";
 import {BookUpdate2} from "../../src/BookUpdate2";
 import { BookUpdate1 } from '../../src/BookUpdate1';
-import {DataStore} from "../../utils/DataStore";
-import {UserRole} from "../../enum/UserRole";
+
 
 let bookUpdate2: BookUpdate2;
-let bookUpdate1: BookUpdate1;
 
 /**
  Scenario 1: Update - Attempt to update a non-existent book

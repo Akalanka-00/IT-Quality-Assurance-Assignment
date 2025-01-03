@@ -1,9 +1,8 @@
-import { Given, When, Then, Status } from '@cucumber/cucumber';
+import { Given, When, Then } from '@cucumber/cucumber';
 import { ApiContextCreator } from "../../utils/apiContextCreator";
 import { BookCreation } from "../../src/BookCreation";
 import { DataStore } from "../../utils/DataStore";
 import { UserRole } from "../../enum/UserRole";
-import { expect } from 'playwright/test';
 
 const contextCreator: ApiContextCreator = new ApiContextCreator();
 
