@@ -1,0 +1,8 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","6468","Add a product to the shopping cart","","Fri Jan 03 11:49:53 UTC 2025","passed","Fri Jan 03 11:50:00 UTC 2025","","","",""
+"","50833","User registration with existing email address","","Fri Jan 03 11:49:02 UTC 2025","passed","Fri Jan 03 11:49:53 UTC 2025","","","",""
+"","4427","Remove a product from the wishlist","","Fri Jan 03 11:50:08 UTC 2025","passed","Fri Jan 03 11:50:12 UTC 2025","","","",""
+"","32","Successfully update account details","","Fri Jan 03 11:50:00 UTC 2025","broken","Fri Jan 03 11:50:00 UTC 2025","","","",""
+"","31","Remove a product from the shopping cart","","Fri Jan 03 11:50:00 UTC 2025","passed","Fri Jan 03 11:50:00 UTC 2025","","","",""
+"","7741","Add a product to the wishlist from the products page","","Fri Jan 03 11:50:00 UTC 2025","passed","Fri Jan 03 11:50:08 UTC 2025","","","",""
+"","22032","User registration with valid data","","Fri Jan 03 11:48:40 UTC 2025","passed","Fri Jan 03 11:49:02 UTC 2025","","","",""
