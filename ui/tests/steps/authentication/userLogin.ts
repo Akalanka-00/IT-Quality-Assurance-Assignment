@@ -13,3 +13,6 @@ When("Submit the login form with valid credentials", async function () {
 Then("User should be logged in successfully", async function () {
     await userLogin.verifySuccessfulLogin();
 });
+Given(/^Login with valid user credentials$/, async function () {
+    await userLogin.processLogin();
+});
