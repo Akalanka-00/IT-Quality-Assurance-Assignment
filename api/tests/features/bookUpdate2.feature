@@ -1,4 +1,4 @@
-Feature: Book Update_2
+Feature: Book Update
 
   Background:
     Given When valid baseUrl is provided
