@@ -32,8 +32,18 @@ Then('I should see a success message confirming the details were updated', async
     console.log("Successfully Updated");
 });
 
+// Scenario 2: Validation errors when fields are left empty or invalid
+When("I leave the firstname, lastname, and email fields empty", async function () {
+    const userEditInfo = {
+        firstName: "",
+        lastName: "",
+        email: "",
+    };
+    await userAccount.editInfo(userEditInfo);
+});
 
+Then("I should see the validation errors", async function () {
+    await userAccount.validateErrors();
 
-
-
+});
 
