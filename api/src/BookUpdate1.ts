@@ -44,7 +44,7 @@ export class BookUpdate1 {
             bookUpdate
         );
 
-        expect(responseUpdate.status).toBe(401);
+        expect(responseUpdate.status).toBe(403);
         expect(responseUpdate.json).toContain("User is not permitted.");
         console.log(`Book Update: ${book.title} book could not be Updated with User Role.`);
     }
