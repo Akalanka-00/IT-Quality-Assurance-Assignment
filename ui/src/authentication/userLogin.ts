@@ -23,6 +23,12 @@ export class UserLogin {
         this.userRegistration = new UserRegistration();
     }
 
+    public async processLogin() {
+        await this.verifyLoginPage();
+        await this.loginWithValidCredentials();
+        await this.verifySuccessfulLogin();
+    }
+
     public async verifyLoginPage() {
         const data = this.dataStore.getData();
         this.page = await this.playWrightConfig.getPage();
@@ -36,6 +42,7 @@ export class UserLogin {
             await this.userRegistration.registerAccount(this.userRegistration.toBeHaveValidRegistrationInfo());
             await this.userRegistration.verifyRegistrationSuccess();
             await this.logout();
+            await this.page.waitForTimeout(10000);
         }
         await this.page.goto(AuthenticationUrl.LOGIN_URL);
         await this.pageHelper.validateUrl(this.page, AuthenticationUrl.LOGIN_URL);
@@ -106,8 +113,6 @@ export class UserLogin {
         await this.page.locator(LoginLocators.CONTINUE_BUTTON).click();
         await this.page.waitForTimeout(2000);
         this.dataStore.setData("AuthData.isLoggedIn", false);
-        await this.page.goto(AuthenticationUrl.REGISTER_URL);
-        await this.pageHelper.validateUrl(this.page, AuthenticationUrl.REGISTER_URL);
         console.log("User logged out successfully");
     }
 

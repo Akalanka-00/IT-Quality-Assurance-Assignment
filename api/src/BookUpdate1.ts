@@ -15,21 +15,6 @@ export class BookUpdate1 {
         this.requestHandler = new RequestHandler(request);
     }
 
-    public async verifyBookUpdatePass(response: ServerResponse, bookData: Book) {
-        const bookRetrieval: BookRetrieval = new BookRetrieval(this.request);
-        const bookId: number = response.json.id;
-
-        // Retrieve the book data
-        const json = await bookRetrieval.retrieveBookById(UserRole.Admin, bookId);
-
-        // Verify the title and author end with "_UPDATED"
-        expect(json.title).toMatch(/_UPDATED$/);
-        expect(json.author).toMatch(/_UPDATED$/);
-
-        // Log the verification results
-        console.log(`Verification Passed: Book Update Verified Successfully with ID: ${bookId}`);
-    }
-
     public async verifyBookUpdateFailed(response: ServerResponse, bookData: Book) {
         const bookRetrieval: BookRetrieval = new BookRetrieval(this.request);
         const bookId: number = response.json.id;
@@ -55,6 +40,7 @@ export class BookUpdate1 {
     //     console.log(bookData.title);
     //     console.log(`Book Updated Successfully with ID: ${bookId}`);
     // }
+
 
     public async updateBookWithUser(response: ServerResponse, userRole:UserRole, book:Book){
         const data = DataStore.getInstance().getData();
@@ -86,14 +72,20 @@ export class BookUpdate1 {
         const response: ServerResponse = await this.requestHandler.putRequest(
             userRole,
             `/api/books/${bookUpdate.id}`,
-            bookUpdate
+            bookUpdate,
         );
-        expect(response.status).toBe(400);
+
+
         console.log(`Book Update Failed: "${bookUpdate.title}" could not be updated with a non-integer ID.`);
+        return response;
+    }
+
+    public async verifyInvalidBookUpdate(response: ServerResponse) {
+        expect(response.status).toBe(400);
+        expect(response.json).toBe("\"\"");
     }
 
     public async updateBookWithEmptyValues(response: ServerResponse, userRole:UserRole, book:Book){
-        const data = DataStore.getInstance().getData();
         const bookUpdate:Book = {
             id: response.json.id,
             title: "", // Empty title
