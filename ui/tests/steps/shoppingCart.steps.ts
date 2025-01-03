@@ -1,11 +1,9 @@
 import{ Given, When, Then } from '@cucumber/cucumber';
 
-Given('I am on the product page', async function () {
-    
-  });
 
 
-  When('I click on {string}', async function (string) {
+
+  When('I click on {string} add to cart', async function (string) {
     
   });
 
@@ -26,5 +24,19 @@ Given('I am on the product page', async function () {
 
 
   Then('The added Products should be visible', async function () {
+    
+  });
+
+//   Scenario: Remove a product from the shopping cart
+
+  Given('I have a product in the shopping cart', async function () {
+    
+  });
+
+  When('I click on {string} remove from the cart', async function (string) {
+    
+  });
+
+  Then('The product should be removed from the shopping cart', async function () {
     
   });
