@@ -8,11 +8,11 @@ Background:
     When I add "MacBook" to the cart
     Then A confirmation message should be displayed
     When I clcik on Shopping Cart Button
-    Then The added Products should be visible
+    Then The added Products "MacBook" should be visible
 
-#   Scenario: Remove a product from the shopping cart
-#     Given I navigate to the shopping cart page
-#     When I click on "MacBook" remove from the cart
-#     Then The product should be removed from the shopping cart
-#     And A confirmation message should be displayed
+  Scenario: Remove a product from the shopping cart
+    Given I navigate to the shopping cart page
+    When I click on "MacBook" remove from the cart
+    Then The product should be removed from the shopping cart
+    And A confirmation message should be displayed
 

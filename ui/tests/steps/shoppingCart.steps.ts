@@ -18,7 +18,7 @@ const shoppingcart =new shoppingCart();
   });
 
 
-  Then('The added Products should be visible', async function (productName:string) {
+  Then('The added Products {string} should be visible', async function (productName:string) {
     await shoppingcart.navigateToShoppingCartPage();
     await shoppingcart.verifyProductInShoppingCart(productName);
   });

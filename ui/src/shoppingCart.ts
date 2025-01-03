@@ -28,8 +28,9 @@ public async addProductToCart(productName:string) {
         
                     if (name?.trim() === productName) {
                         await this.page.waitForTimeout(2000);
-                        await productElements.nth(i).locator(ShoppingCartLocators.ADD_TO_CART_BUTTON).nth(1).click();
+                        await productElements.nth(i).locator(ShoppingCartLocators.ADD_TO_CART_BUTTON).nth(0).click();
                         console.log(`Clicked "Add to Cart" for product: "${productName}".`);
+                        await this.page.waitForTimeout(4000);
                         const successMessageLocator = this.page.locator(ShoppingCartLocators.SUCCESS_MESSAGE);
                         // await expect(successMessageLocator).toBeVisible({ timeout: 10000 });
                         await expect(successMessageLocator).toContainText(`Success: You have added ${productName} to your shopping cart`);

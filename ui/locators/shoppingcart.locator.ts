@@ -1,6 +1,6 @@
 export class ShoppingCartLocators {
     // Product Page Locators
-    static ADD_TO_CART_BUTTON = 'button[formaction="https://demo.opencart.com/en-gb?route=checkout/cart.add"]';
+    static ADD_TO_CART_BUTTON = '.button-group button[type="submit"]';
     static SUCCESS_MESSAGE = "//div[contains(@class, 'alert-success')]";
 
     // Shopping Cart Page Locators
