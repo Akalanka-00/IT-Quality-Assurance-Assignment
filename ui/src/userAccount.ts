@@ -44,6 +44,21 @@ export class UserAccount{
         console.log("Success: Your account has been successfully updated..");
     }
 
+    public async validateErrors() {
+
+        const firstNameErrorMessage = "First Name must be between 1 and 32 characters!";
+        const lastNameErrorMessage = "Last Name must be between 1 and 32 characters!";
+        const emailErrorMessage = "E-Mail Address does not appear to be valid!";
+
+        expect (await this.page.locator(UserAccountLocators.FIRST_NAME_ERRORS).textContent()).toBe(firstNameErrorMessage);
+        expect (await this.page.locator(UserAccountLocators.LAST_NAME_ERRORS).textContent()).toBe(lastNameErrorMessage);
+        expect(await this.page.locator(UserAccountLocators.EMAIL_ERRORS).textContent()).toBe(emailErrorMessage);
+
+
+        // const errors = await this.page.locator(UserAccountLocators.VALIDATION_ERRORS).allTextContents();
+        // expect(errors).toEqual(expectedErrors);
+        // console.log("Validation errors matched:", errors);
+    }
 
 
 
