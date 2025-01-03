@@ -3,10 +3,6 @@ import { Wishlist } from "../../src/wishlist";
 
 const wishlist = new Wishlist();
 
-Given("I navigate to the products page", async function () {
-    console.log("Navigating to products page...");
-});
-
 When("I add the product {string} to the wishlist", async function (productName: string) {
     await wishlist.addProductToWishlist(productName);
 });

@@ -13,10 +13,6 @@ export class Wishlist {
 
     // Navigate to homepage and add a product to wishlist
     public async addProductToWishlist(productName: string) {
-        this.page = await this.playWrightConfig.getPage();
-        await this.page.goto("https://demo.opencart.com"); // Navigate to homepage
-        console.log("Navigated to Home page.");
-
         const productElements = this.page.locator(WishlistLocators.PRODUCT_LIST);
         const count = await productElements.count();
         console.log(`Total products found: ${count}`);
