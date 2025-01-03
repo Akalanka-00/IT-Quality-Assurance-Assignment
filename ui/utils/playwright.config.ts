@@ -1,11 +1,12 @@
 import { Browser, BrowserContext, firefox, Page } from 'playwright';
+import {BaseURL} from "../data/urls/baseURL";
 
 export class PlaywrightConfig {
     private static instance: PlaywrightConfig;
     private browser: Browser | null = null;
     private context: BrowserContext | null = null;
     private page: Page | null = null;
-    private baseUrl:string = "https://demo.opencart.com";
+    private baseUrl:string = BaseURL.URL;
 
     // Private constructor to prevent direct instantiation
     private constructor() {}
