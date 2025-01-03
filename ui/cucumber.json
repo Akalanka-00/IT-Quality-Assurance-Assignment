@@ -5,7 +5,7 @@
       "snippetInterface": "async-await"
     },
     "paths": [
-      "tests/features/**/shoppingCart.feature"
+      "tests/features/**/*.feature"
     ],
     "dryRun": false,
     "require": [

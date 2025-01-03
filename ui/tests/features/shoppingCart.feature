@@ -5,14 +5,14 @@ Background:
 
   Scenario: Add a product to the shopping cart
     Given I navigate to the products page
-    When I add "Macbook" to the cart
+    When I add "MacBook" to the cart
     Then A confirmation message should be displayed
     When I clcik on Shopping Cart Button
     Then The added Products should be visible
 
 #   Scenario: Remove a product from the shopping cart
 #     Given I navigate to the shopping cart page
-#     When I click on "Macbook" remove from the cart
+#     When I click on "MacBook" remove from the cart
 #     Then The product should be removed from the shopping cart
 #     And A confirmation message should be displayed
 

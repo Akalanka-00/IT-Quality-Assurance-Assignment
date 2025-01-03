@@ -27,14 +27,13 @@ public async addProductToCart(productName:string) {
                     console.log(`Product found: ${name}`);
         
                     if (name?.trim() === productName) {
-                        console.log("trying to click add to cart button..")
+                        await this.page.waitForTimeout(2000);
                         await productElements.nth(i).locator(ShoppingCartLocators.ADD_TO_CART_BUTTON).nth(1).click();
                         console.log(`Clicked "Add to Cart" for product: "${productName}".`);
-                        // Verify success message
                         const successMessageLocator = this.page.locator(ShoppingCartLocators.SUCCESS_MESSAGE);
                         // await expect(successMessageLocator).toBeVisible({ timeout: 10000 });
                         await expect(successMessageLocator).toContainText(`Success: You have added ${productName} to your shopping cart`);
-                        console.log(`Verified success message for adding "${productName}" to wishlist.`);
+                        console.log(`Verified success message for adding "${productName}" to Cart.`);
                         return;
                     }
                 }
