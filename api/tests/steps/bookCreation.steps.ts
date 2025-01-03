@@ -35,6 +35,7 @@ Given("New book data is provided", async function () {
 When("I create a book", async function () {
     const bookCreation:BookCreation = new BookCreation(this.request);
     this.response = await bookCreation.createBook(this.userRole, this.book);
+    this.createdBook = this.response.json;
 });
 Then("the book should be created successfully", async function () {
     const bookCreation:BookCreation = new BookCreation(this.request);

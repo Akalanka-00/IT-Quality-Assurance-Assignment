@@ -3,27 +3,36 @@ import { Wishlist } from "../../src/wishlist";
 
 const wishlist = new Wishlist();
 
-Given("I am on the product page", async function () {
+Given("I navigate to the products page", async function () {
+    console.log("Navigating to products page...");
+});
+
+When("I add the product {string} to the wishlist", async function (productName: string) {
+    await wishlist.addProductToWishlist(productName);
+});
+
+Then("The product {string} should be listed in the wishlist", async function (productName: string) {
+    await wishlist.navigateToWishlistPage();
+    await wishlist.verifyProductInWishlist(productName);
+});
+
+Then("A confirmation message should be displayed", async function () {
+    await wishlist.verifyConfirmationMessage();
+});
+
+Given("I navigate to the wishlist page", async function () {
     await wishlist.navigateToWishlistPage();
 });
 
-When('I click on "Add to Wishlist"', async function () {
-    await wishlist.addProductToWishlist();
+When("I remove the product {string}", async function (productName: string) {
+    await wishlist.removeProductFromWishlist(productName);
 });
 
-Then("The product should be added to the wishlist", async function () {
-    console.log("Add to Wishlist validation complete.");
-});
-
-Given("I have a product in the wishlist", async function () {
-    await wishlist.navigateToWishlistPage();
-    console.log("Verified the product is already in the wishlist.");
-});
-
-When('I click on "Remove from Wishlist"', async function () {
-    await wishlist.removeProductFromWishlist();
-});
-
-Then("The product should be removed from the wishlist", async function () {
-    console.log("Remove from Wishlist validation complete.");
+Then("The product {string} should no longer be listed in the wishlist", async function (productName: string) {
+    try {
+        await wishlist.verifyProductInWishlist(productName);
+        throw new Error(`Product "${productName}" is still listed in the wishlist.`);
+    } catch (error) {
+        console.log(`Validation passed: "${productName}" is no longer in the wishlist.`);
+    }
 });

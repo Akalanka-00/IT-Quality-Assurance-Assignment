@@ -23,6 +23,12 @@ export class UserLogin {
         this.userRegistration = new UserRegistration();
     }
 
+    public async processLogin() {
+        await this.verifyLoginPage();
+        await this.loginWithValidCredentials();
+        await this.verifySuccessfulLogin();
+    }
+
     public async verifyLoginPage() {
         const data = this.dataStore.getData();
         this.page = await this.playWrightConfig.getPage();
