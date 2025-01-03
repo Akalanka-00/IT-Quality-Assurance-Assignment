@@ -13,5 +13,6 @@ Feature: User Registration
     And Submit the registration form with the same email address
     And User should be registered successfully
     And User should be logged out successfully
-    When Submit the registration form with the same email address
+    When Navigate to User Registration Page
+    And Submit the registration form with the same email address
     Then Get the existing email address error message
