@@ -1,7 +1,7 @@
 Feature: User Account
 
 Background:
-  Given Navigate to Login Page
+  Given Login with valid user credentials
 
   Scenario: Successfully update account details
     Given I navigate to the "My Account Information" page
