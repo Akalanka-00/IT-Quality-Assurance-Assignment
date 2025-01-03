@@ -2,6 +2,7 @@ import { Page } from "playwright";
 import { PlaywrightConfig } from "../utils/playwright.config";
 import { WishlistLocators } from "../locators/wishlist.locator";
 import { expect } from "@playwright/test";
+import {BaseURL} from "../data/urls/baseURL.url";
 
 export class Wishlist {
     private page: Page = undefined as unknown as Page;
@@ -11,7 +12,14 @@ export class Wishlist {
         this.playWrightConfig = PlaywrightConfig.getInstance();
     }
 
-    // Navigate to homepage and add a product to wishlist
+    // Navigate to homepage
+    public async navigateToHomePage(){
+        this.page = await this.playWrightConfig.getPage();
+        await this.page.goto(BaseURL.URL);
+        console.log("Navigated to Home page.");
+    }
+
+    // Add a product to wishlist
     public async addProductToWishlist(productName: string) {
         const productElements = this.page.locator(WishlistLocators.PRODUCT_LIST);
         const count = await productElements.count();
