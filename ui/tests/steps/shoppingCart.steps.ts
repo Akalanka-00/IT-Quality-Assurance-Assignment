@@ -3,6 +3,9 @@ import { shoppingCart } from '../../src/shoppingCart';
 
 const shoppingcart =new shoppingCart();
 
+Given("I navigate to the products page",async function(){
+  await shoppingcart.navigateToShoppingCartPage();
+});
 
   When('I add {string} to the cart', async function (productName:string) {
     await shoppingcart.addProductToCart(productName)

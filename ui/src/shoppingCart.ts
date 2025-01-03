@@ -41,7 +41,9 @@ public async addProductToCart(productName:string) {
         
                 throw new Error(`Product "${productName}" not found on the homepage.`);
             
-}// Navigate to the shopping cart page
+}
+
+// Navigate to the shopping cart page
 public async navigateToShoppingCartPage() {
     this.page = await this.playWrightConfig.getPage();
     await this.page.click(ShoppingCartLocators.SHOPPINGCART_PAGE_LINK);
@@ -50,6 +52,7 @@ public async navigateToShoppingCartPage() {
 
 // Verify the product exists in the shopping Cart
 public async verifyProductInShoppingCart(productName: string) {
+    await this.page.waitForTimeout(2000);
     const items = this.page.locator(ShoppingCartLocators.CART_ITEM_NAME);
     const count = await items.count();
 
