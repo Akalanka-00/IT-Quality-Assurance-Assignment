@@ -1,7 +1,14 @@
 import { Given, When, Then } from "@cucumber/cucumber";
 import { Wishlist } from "../../src/wishlist";
+import {BaseURL} from "../../data/urls/baseURL.url";
 
 const wishlist = new Wishlist();
+
+Given("I navigate to the home page", async function () {
+    this.page = await this.playWrightConfig.getPage();
+    await this.page.goto(BaseURL.URL);
+    console.log("Navigated to Home page.");
+});
 
 When("I add the product {string} to the wishlist", async function (productName: string) {
     await wishlist.addProductToWishlist(productName);
