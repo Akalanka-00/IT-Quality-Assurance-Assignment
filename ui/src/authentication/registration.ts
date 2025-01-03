@@ -73,7 +73,7 @@ export class UserRegistration{
             await userLogin.logout();
         }
         this.page = await this.playWrightConfig.getPage();
-
+        await this.page.pause();
         await this.page.fill(RegistrationLocators.FIRST_NAME_INPUT_FIELD, user.firstName);
         await this.page.fill(RegistrationLocators.LAST_NAME_INPUT_FIELD, user.lastName);
         await this.page.fill(RegistrationLocators.EMAIL_INPUT_FIELD, user.email);
@@ -94,6 +94,7 @@ export class UserRegistration{
         const url = this.page.url();
         this.pageHelper.fetchTokenFromUrl(url);
         const data = this.dataStore.getData();
+        await this.page.waitForTimeout(5000);
         await this.pageHelper.validateUrl(this.page, AuthenticationUrl.REGISTER_SUCCESS, true);
         await expect(this.page.locator(RegistrationLocators.SUCCESS_REGISTRATION_TITLE)).toHaveText(data.AuthData.registration.successMessage);
         await expect(this.page.locator(RegistrationLocators.BREADCRUMB_HOME).getByText(data.AuthData.registration.successMessage)).toBeVisible();
