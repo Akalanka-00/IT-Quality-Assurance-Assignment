@@ -16,10 +16,6 @@ Then("The product {string} should be listed in the wishlist", async function (pr
     await wishlist.verifyProductInWishlist(productName);
 });
 
-Then("A confirmation message should be displayed", async function () {
-    await wishlist.verifyConfirmationMessage();
-});
-
 Given("I navigate to the wishlist page", async function () {
     await wishlist.navigateToWishlistPage();
 });
@@ -29,10 +25,5 @@ When("I remove the product {string}", async function (productName: string) {
 });
 
 Then("The product {string} should no longer be listed in the wishlist", async function (productName: string) {
-    try {
-        await wishlist.verifyProductInWishlist(productName);
-        throw new Error(`Product "${productName}" is still listed in the wishlist.`);
-    } catch (error) {
-        console.log(`Validation passed: "${productName}" is no longer in the wishlist.`);
-    }
+    await wishlist.verifyProductNotInWishlist(productName);
 });

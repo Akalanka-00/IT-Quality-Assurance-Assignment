@@ -8,8 +8,7 @@ Feature: Wishlist Management
     When I add the product "MacBook" to the wishlist
     Then The product "MacBook" should be listed in the wishlist
 
-#  Scenario: Remove a product from the wishlist
-#    Given I navigate to the wishlist page
-#    When I remove the product "MacBook"
-#    Then The product "MacBook" should no longer be listed in the wishlist
-#    And A confirmation message should be displayed
+  Scenario: Remove a product from the wishlist
+    Given I navigate to the wishlist page
+    When I remove the product "MacBook"
+    Then The product "MacBook" should no longer be listed in the wishlist
