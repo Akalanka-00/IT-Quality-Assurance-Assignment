@@ -98,7 +98,7 @@ export class BookCreation{
     public async createBookWithIntegerId(){
         const data = DataStore.getInstance().getData();
         const book:Book = {
-            id: 12345, 
+            id: data.SharedData.randomInt,
             title: `${data.SharedData.randomStr}_TITLE`,
             author: `${data.SharedData.randomStr}_AUTHOR`
         };
@@ -108,5 +108,4 @@ export class BookCreation{
         expect(response.json.text).toBe('"ID must be a string"');
         console.log(`Error for book with integer ID: ${response.json.text}`);
     }
-
 }
