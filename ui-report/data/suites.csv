@@ -1,4 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","3772","Add a product to the wishlist from the products page","","Fri Jan 03 07:56:26 UTC 2025","passed","Fri Jan 03 07:56:30 UTC 2025","","","",""
-"","17013","User registration with valid data","","Fri Jan 03 07:55:39 UTC 2025","passed","Fri Jan 03 07:55:56 UTC 2025","","","",""
-"","30425","User registration with existing email address","","Fri Jan 03 07:55:56 UTC 2025","passed","Fri Jan 03 07:56:26 UTC 2025","","","",""
