@@ -1,5 +1,6 @@
-import {After, AfterAll, BeforeAll} from "@cucumber/cucumber";
+import {After, AfterAll, BeforeAll, BeforeStep} from "@cucumber/cucumber";
 import {PlaywrightConfig} from "../utils/playwright.config";
+import { handleRandomHumanVerification } from "../src/helper/verification-handler";
 
 const playwrightConfig:PlaywrightConfig = PlaywrightConfig.getInstance();
 
@@ -20,4 +21,9 @@ After(async function ({pickle}) {
     this.attach(img, 'image/png');
     console.log('\n***********************************************************\n');
 
+});
+
+BeforeStep(async function () {
+    const page = await playwrightConfig.getPage();
+    await handleRandomHumanVerification(page);
 });
