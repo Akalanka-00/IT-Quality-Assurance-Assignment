@@ -17,12 +17,6 @@ export class Wishlist {
         await this.page.goto("https://demo.opencart.com"); // Navigate to homepage
         console.log("Navigated to Home page.");
 
-        // // Wait for product list to load
-        // await this.page.waitForSelector(WishlistLocators.PRODUCT_LIST, { timeout: 10000 });
-        // console.log("Product list is visible.");
-        // await this.page.waitForSelector(WishlistLocators.PRODUCT_NAME, { timeout: 10000 });
-        // console.log("Verified product names are visible.");
-
         const productElements = this.page.locator(WishlistLocators.PRODUCT_LIST);
         const count = await productElements.count();
         console.log(`Total products found: ${count}`);
@@ -34,14 +28,13 @@ export class Wishlist {
             console.log(`Product found: ${name}`);
 
             if (name?.trim() === productName) {
-                console.log("trying to click add to wishlist button..");
                 await this.page.waitForTimeout(2000);
                 await productElements.nth(i).locator(WishlistLocators.ADD_TO_WISHLIST_BUTTON).nth(1).click();
                 console.log(`Clicked "Add to Wishlist" for product: "${productName}".`);
+
                 // Verify success message
                 const successMessageLocator = this.page.locator(WishlistLocators.SUCCESS_MESSAGE);
-                // await expect(successMessageLocator).toBeVisible({ timeout: 10000 });
-                await expect(successMessageLocator).toContainText(`Success: You have added ${productName} to your wish list`);
+                await expect(successMessageLocator).toContainText(`Success: You have added ${productName} to your wish list`,{timeout:10000});
                 console.log(`Verified success message for adding "${productName}" to wishlist.`);
                 return;
             }
@@ -74,9 +67,11 @@ export class Wishlist {
     }
 
     public async verifyProductNotInWishlist(productName: string) {
+        await this.page.waitForTimeout(2000);
         const items = this.page.locator(WishlistLocators.WISHLIST_ITEM_NAME);
         const count = await items.count();
 
+        console.log(`product count in wishlist is ${count}`);
         for (let i = 0; i < count; i++) {
             const name = await items.nth(i).textContent();
             if (name?.trim() === productName) {
@@ -90,30 +85,27 @@ export class Wishlist {
         const items = this.page.locator(WishlistLocators.WISHLIST_ITEMS);
         const count = await items.count();
 
+        console.log(`Total products found in wishlist: ${count}`);
+
         if (count === 0) {
-            throw new Error("Wishlist is empty, nothing to remove.");
+            await this.page.waitForTimeout(2000);
+            await expect(this.page.locator(WishlistLocators.EMPTY_WISHLIST_MESSAGE)).toBeVisible();
         }
 
         for (let i = 0; i < count; i++) {
-            const name = await items.nth(i).locator(WishlistLocators.WISHLIST_ITEM_NAME).textContent();
+            const name = await items.nth(i).locator(WishlistLocators.WISHLIST_ITEMS_FIELD).nth(1).textContent();
             if (name?.trim() === productName) {
-                await items.nth(i).locator(WishlistLocators.REMOVE_FROM_WISHLIST_BUTTON).click();
+                await items.nth(i).locator(WishlistLocators.WISHLIST_ITEM_ACTION_BUTTON).nth(1).click();
                 console.log(`Clicked remove button for product "${productName}".`);
-                await expect(this.page.locator(WishlistLocators.SUCCESS_MESSAGE)).toBeVisible({
-                    timeout: 10000,
-                });
+
+                // Verify success message
+                await expect(this.page.locator(WishlistLocators.SUCCESS_MESSAGE)).toBeVisible({timeout: 10000});
                 console.log(`Verified success message for removing "${productName}" from wishlist.`);
                 return;
             }
         }
 
         throw new Error(`Product "${productName}" could not be removed because it was not found.`);
-    }
-
-    public async verifyConfirmationMessage() {
-        const successMessage = this.page.locator(WishlistLocators.SUCCESS_MESSAGE);
-        await expect(successMessage).toBeVisible();
-        console.log("Verified that the confirmation message is displayed.");
     }
 
 }

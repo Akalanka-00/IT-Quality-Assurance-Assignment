@@ -16,10 +16,6 @@ Then("The product {string} should be listed in the wishlist", async function (pr
     await wishlist.verifyProductInWishlist(productName);
 });
 
-Then("A confirmation message should be displayed", async function () {
-    await wishlist.verifyConfirmationMessage();
-});
-
 Given("I navigate to the wishlist page", async function () {
     await wishlist.navigateToWishlistPage();
 });
