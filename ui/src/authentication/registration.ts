@@ -73,7 +73,6 @@ export class UserRegistration{
             await userLogin.logout();
         }
         this.page = await this.playWrightConfig.getPage();
-        await this.page.pause();
         await this.page.fill(RegistrationLocators.FIRST_NAME_INPUT_FIELD, user.firstName);
         await this.page.fill(RegistrationLocators.LAST_NAME_INPUT_FIELD, user.lastName);
         await this.page.fill(RegistrationLocators.EMAIL_INPUT_FIELD, user.email);
