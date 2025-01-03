@@ -28,7 +28,7 @@ export class BookUpdate2{
     public async generateNonExistingBookId(){
         const data = DataStore.getInstance().getData();
         data.SharedData.randomInt = Math.floor(Math.random() * 1000000); // Generate a random large number
-        console.log(`🔄 Generated non-existent Book ID: ${data.SharedData.randomInt}`);
+        console.log(`Generated non-existent Book ID: ${data.SharedData.randomInt}`);
     }
 
     public async updateNonExistentBook(response: ServerResponse, book: Book, userRole: UserRole){
@@ -36,7 +36,7 @@ export class BookUpdate2{
 
         // Use the non-existent Book ID generated earlier
         const nonExistentBookId: number = data.SharedData.randomInt;
-        console.log(`🔍 Non-existent Book ID: ${nonExistentBookId}`);
+        console.log(`Non-existent Book ID: ${nonExistentBookId}`);
 
         // Fetch all existing books
         const bookRetrieval: BookRetrieval = new BookRetrieval(this.request);
@@ -50,7 +50,7 @@ export class BookUpdate2{
         const existingBooks = books.filter((book: Book) => book.id === nonExistentBookId);
 
         if (existingBooks.length > 0) {
-            console.log(`⚠️ Book ID ${nonExistentBookId} already exists in the system`);
+            console.log(`Book ID ${nonExistentBookId} already exists in the system`);
             return;
         }
 
@@ -71,7 +71,7 @@ export class BookUpdate2{
         // Validate response
         expect(responseUpdate.status).toBe(404);
         expect(responseUpdate.statusText).toBe('');
-        console.log(`✅ Book Update with non-existent ID failed as expected: Could not update non-existent book with ID ${nonExistentBookId}.`);
+        console.log(`Book Update with non-existent ID failed as expected: Could not update non-existent book with ID ${nonExistentBookId}.`);
     }
 
 /**
@@ -93,7 +93,7 @@ export class BookUpdate2{
         expect(response.status).toBe(201);
 
         this.createdBookId = response.json.id;
-        console.log(`✅ Book created successfully with ID: ${this.createdBookId}`);
+        console.log(`Book created successfully with ID: ${this.createdBookId}`);
     }
 
     /**
@@ -121,14 +121,14 @@ export class BookUpdate2{
     public verifyUnauthorizedResponse() {
         expect(this.response?.status).toBe(403);
         expect(this.response?.statusText).toBe('');
-        console.log(`🚫 Unauthorized attempt to update book with ID: ${this.createdBookId} was correctly denied.`);
+        console.log(`Unauthorized attempt to update book with ID: ${this.createdBookId} was correctly denied.`);
     }
 
     /**
      * Step 4: Verify the book was not updated
      */
     public verifyBookNotUpdated() {
-        console.log('🛡️ Validation passed: Unauthorized update attempt did not modify the book.');
+        console.log('Validation passed: Unauthorized update attempt did not modify the book.');
     }
 
 /**
@@ -154,7 +154,7 @@ export class BookUpdate2{
 
         expect(responseCreate.status).toBe(201);
         this.createdBookId = responseCreate.json.id;
-        console.log(`✅ Book created successfully with ID: ${this.createdBookId}`);
+        console.log(`Book created successfully with ID: ${this.createdBookId}`);
     }
 
     /**
@@ -178,14 +178,14 @@ export class BookUpdate2{
         expect(response.status).toBe(200);
         expect(response.json.title).toBe(book.title);
         expect(response.json.author).toBe(book.author);
-        console.log(`✅ Book updated with new author: ${book.author}`);
+        console.log(`Book updated with new author: ${book.author}`);
     }
 
     /**
      * Step 3: Verify the updated book's details.
      */
     public verifyBookUpdate() {
-        console.log('🛡️ Validation passed: Book updated successfully with the new author.');
+        console.log('Validation passed: Book updated successfully with the new author.');
     }
 
 }
