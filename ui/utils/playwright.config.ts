@@ -1,11 +1,12 @@
 import { Browser, BrowserContext, firefox, Page } from 'playwright';
+import {BaseURL} from "../data/urls/baseURL";
 
 export class PlaywrightConfig {
     private static instance: PlaywrightConfig;
     private browser: Browser | null = null;
     private context: BrowserContext | null = null;
     private page: Page | null = null;
-    private baseUrl:string = "https://demo.opencart.com";
+    private baseUrl:string = BaseURL.URL;
 
     // Private constructor to prevent direct instantiation
     private constructor() {}
@@ -23,7 +24,8 @@ export class PlaywrightConfig {
         if (!this.browser) {
             const isHeadless = !!process.env['CI']; // Check if the environment is CI
             console.log('Launching browser in headless mode:', isHeadless);
-            this.browser = await firefox.launch({ headless: isHeadless });
+            this.browser = await firefox.launch({ headless: isHeadless, slowMo:1000 });
+
         }
 
         if (!this.context) {
