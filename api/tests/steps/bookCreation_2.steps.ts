@@ -110,15 +110,15 @@ Given("I set the book ID as an integer value", function () {
     }
   });
   
-  Then("the book should be created successfully", async function () {
-    if (this.response.status !== 201) {
-      throw new Error(`Expected status 201 but received ${this.response.status}`);
-    }
-  
-    const createdBook = this.response.body;
-    if (!createdBook || createdBook.title !== this.book.title || createdBook.author !== this.book.author) {
-      throw new Error("Book creation response does not match the provided book details.");
-    }
-  
-    console.log("Book created successfully:", createdBook);
-  });
+  // Then("the book should be created successfully", async function () {
+  //   if (this.response.status !== 201) {
+  //     throw new Error(`Expected status 201 but received ${this.response.status}`);
+  //   }
+  //
+  //   const createdBook = this.response.body;
+  //   if (!createdBook || createdBook.title !== this.book.title || createdBook.author !== this.book.author) {
+  //     throw new Error("Book creation response does not match the provided book details.");
+  //   }
+  //
+  //   console.log("Book created successfully:", createdBook);
+  // });

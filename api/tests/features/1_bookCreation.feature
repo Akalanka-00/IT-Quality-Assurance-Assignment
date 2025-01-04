@@ -4,7 +4,7 @@ Feature: Book Creation
     Given When valid baseUrl is provided
 
 @TC-001
-  Scenario: Create a book with a user role
+  Scenario: Create a book with a user role as User
     Given New book data is provided
     And Set User Role to User
     When I create a book

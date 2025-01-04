@@ -33,6 +33,7 @@ export class BookCreation{
         const bookRetrieval:BookRetrieval = new BookRetrieval(this.request);
         const bookId:number = response.json.id;
         const json = await bookRetrieval.retrieveBookById(UserRole.Admin, bookId);
+        expect(response.status).toBe(201);
         expect(json.title).toBe(bookData.title);
         expect(json.author).toBe(bookData.author);
         console.log(`Book Created Successfully with ID: ${bookId}`);
