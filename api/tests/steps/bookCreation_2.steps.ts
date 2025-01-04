@@ -40,7 +40,7 @@ When("I attempt to create the book2", async function () {
   }
 });
 
-Then("the system should respond with an error message for missing {string}", async function () {
+Then("the system should respond with an error message for missing value", async function () {
     const data = DataStore.getInstance().getData();
     const expectedErrorMessage=data.BookData.missingValues.title;
   if (this.response.status !== 400) {

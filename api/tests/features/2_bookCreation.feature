@@ -8,7 +8,7 @@ Scenario: Create a book without a title
    Given I am logged in as an admin user2
    And I provide a book with an author but no title
    When I attempt to create the book2
-   Then the system should respond with an error message for missing "Missing title"
+   Then the system should respond with an error message for missing value
 
   @TC-005
 Scenario: Create a book without an author
